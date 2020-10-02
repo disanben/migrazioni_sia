@@ -18,16 +18,16 @@
 # "0105: Lista delle istanze fatte per server di arrivo"
 
 #INTO OUTFILE '/exportdata/customers.txt'
-   
-getSqlCommand () { 
+
+getSqlCommand () {
    CODE="$1"
    SRV="$2"
    IST="$3"
    TIP="$4"
    NOT="$5"
-   
+
    #echo "ricerca stringa per cod: ${CODE}"
-   
+
    case $CODE in
       0101)
          cod_0101
@@ -53,6 +53,12 @@ getSqlCommand () {
          #echo "SQL passed: ${SQL}"
          exit
          ;;
+      0104)
+            cod_0104
+            SQL=$( cod_0104 )
+            #echo "SQL passed: ${SQL}"
+            exit
+            ;;
       0106)
          cod_0106
          SQL=$( cod_0106 )
@@ -155,25 +161,25 @@ getSqlCommand () {
          #echo "SQL passed: ${SQL}"
          exit
          ;;
-      
+
    esac
-   
+
    return ${SQL}
 }
-        
+
 # 0101: ricerca libera di tutto da Elenco_Server_Listafinale
 cod_0101(){
   #echo "0101: ricerca libera di tutto da Elenco_Server_Listafinale per tipo, istanza e server partenza"
   SQLSTRING="select ServerPartenza, FemsId_Fire, ServerArrivo, TipoFems2, StatoIstanze, DataCre from Elencoserver_Feng_Listafinale where TipoFems2 LIKE '%${TIP}%' and FemsId_Fire LIKE '%${IST}%' and ServerPartenza LIKE '%${SRV}%'"
-  echo "${SQLSTRING}" 
+  echo "${SQLSTRING}"
 }
 
 
-# 0102: Macchine presenti nelle due tabelle 
+# 0102: Macchine presenti nelle due tabelle
 cod_0102(){
   #echo "0102: Macchine presenti nelle due tabelle"
   SQLSTRING="select distinct ServerPartenza, macchina from Elencoserver_Feng_Listafinale left join Elencoserver_Feng_2016 on Elencoserver_Feng_Listafinale.ServerPartenza = Elencoserver_Feng_2016.macchina order by macchina"
-  echo "${SQLSTRING}" 
+  echo "${SQLSTRING}"
 }
 
 # 0103: Istanze di tipo FemsWS migrate e situazione macchina da buttare
@@ -181,16 +187,22 @@ cod_0103(){
   #echo "0103: Istanze di tipo FemsWS migrate e situazione macchina da buttare"
   SQLSTRING="select ServerPartenza, daButtare, ServerArrivo, FemsId_Fire, TipoFems2, StatoIstanze, Elencoserver_Feng_Listafinale.DataCre as File_1, Da_Buttare.DataCre as File_2 from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare where StatoIstanze like '%butta%' and ServerPartenza LIKE '%${SRV}%' order by ServerPartenza, FemsId_Fire"
   #SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, StatoIstanze, daButtare from Elencoserver_Feng_Listafinale right join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare where StatoIstanze like '%butta%' order by ServerPartenza, FemsId_Fire"
-    
-  echo "${SQLSTRING}" 
+
+  echo "${SQLSTRING}"
 }
 
+# 0105: lista delle istanze fatte per server di partenza
+cod_0104(){
+  #0105: lista delle istanze fatte per server di arrivo
+  SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, ServerArrivo, StatoIstanze from Elencoserver_Feng_Listafinale where StatoIstanze like '%butta%' and FemsId_Fire LIKE '%${IST}%' and TipoFems2 LIKE '%${TIP}%' and ServerPartenza LIKE '%${SRV}%' order by ServerPartenza"
+  echo "${SQLSTRING}"
+}
 
 # 0105: lista delle istanze fatte per server di arrivo
 cod_0105(){
   #0105: lista delle istanze fatte per server di arrivo
-  SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, ServerArrivo, StatoIstanze from Elencoserver_Feng_Listafinale where StatoIstanze like '%butta%' and ServerArrivo LIKE '%${SRV}%' order by ServerArrivo"
-  echo "${SQLSTRING}" 
+  SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, ServerArrivo, StatoIstanze from Elencoserver_Feng_Listafinale where StatoIstanze like '%butta%' and FemsId_Fire LIKE '%${IST}%' and TipoFems2 LIKE '%${TIP}%' and ServerArrivo LIKE '%${SRV}%' order by ServerArrivo"
+  echo "${SQLSTRING}"
 }
 
 
@@ -198,24 +210,24 @@ cod_0105(){
 cod_0106(){
   #echo "0106: Istanze di tipo FemsWS migrate e situazione macchina da buttare"
   SQLSTRING="select ServerPartenza, daButtare,StatoIstanze, Eliminata, ServerArrivo, FemsId_Fire, TipoFems2, Check_Istanze.Note "
-  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare " 
+  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare "
   SQLSTRING=${SQLSTRING}"left join Check_Istanze on Elencoserver_Feng_Listafinale.FemsId_Fire = Istanza where StatoIstanze like '%butta%' and ServerPartenza LIKE '%${SRV}%'"
   SQLSTRING=${SQLSTRING}" group by ServerPartenza,daButtare, ServerArrivo, FemsId_Fire, TipoFems2, StatoIstanze, Check_Istanze.Note, Eliminata order by ServerPartenza, FemsId_Fire;"
             #SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, StatoIstanze, daButtare from Elencoserver_Feng_Listafinale right join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare where StatoIstanze like '%butta%' order by ServerPartenza, FemsId_Fire"
-    
-  echo "${SQLSTRING}" 
+
+  echo "${SQLSTRING}"
 }
 
 #0107: Lista delle istanze da eliminare e check (ServerArrivo=ServerPartenza da buttare)
 cod_0107(){
   #echo "0107: Lista delle istanze da eliminare e check (ServerArrivo=ServerPartenza da buttare)
   SQLSTRING="select ServerPartenza, daButtare,StatoIstanze, Eliminata, ServerArrivo, FemsId_Fire, TipoFems2, Check_Istanze.Note "
-  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare " 
+  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare "
   SQLSTRING=${SQLSTRING}"left join Check_Istanze on Elencoserver_Feng_Listafinale.FemsId_Fire = Istanza where ServerPartenza=ServerArrivo and ServerPartenza LIKE '%${SRV}%'"
   SQLSTRING=${SQLSTRING}" group by ServerPartenza,daButtare, ServerArrivo, FemsId_Fire, TipoFems2, StatoIstanze, Check_Istanze.Note, Eliminata order by ServerPartenza, FemsId_Fire;"
   #SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, StatoIstanze, daButtare from Elencoserver_Feng_Listafinale right join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare where StatoIstanze like '%butta%' order by ServerPartenza, FemsId_Fire"
-    
-  echo "${SQLSTRING}" 
+
+  echo "${SQLSTRING}"
 }
 
 # 110 Lista della tabella Da_Buttare
@@ -230,11 +242,11 @@ cod_0110(){
 cod_0151(){
    # 0151: Mostra le istanze da migrare su nuovo server da definire
   SQLSTRING="select ServerPartenza, Da_Buttare.Eliminata, Da_Buttare.Note,StatoIstanze, ServerArrivo, FemsId_Fire, TipoFems2, Check_Istanze.Note "
-  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare " 
+  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare "
   SQLSTRING=${SQLSTRING}"left join Check_Istanze on Elencoserver_Feng_Listafinale.FemsId_Fire = Istanza where StatoIstanze like '%NUOVO%' and ServerPartenza LIKE '%${SRV}%'"
   SQLSTRING=${SQLSTRING}" order by ServerPartenza, FemsId_Fire;"
   #SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, StatoIstanze, daButtare from Elencoserver_Feng_Listafinale right join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare where StatoIstanze like '%butta%' order by ServerPartenza, FemsId_Fire"
-    
+
    echo "${SQLSTRING}"
 }
 
@@ -242,49 +254,49 @@ cod_0151(){
 cod_0152(){
    # 0152: Mostra le istanze da migrare su nuovo server da definire
   SQLSTRING="select ServerPartenza, Da_Buttare.Eliminata, Da_Buttare.Note,StatoIstanze, ServerArrivo, FemsId_Fire, TipoFems2, Check_Istanze.Note "
-  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare " 
+  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare "
   SQLSTRING=${SQLSTRING}"left join Check_Istanze on Elencoserver_Feng_Listafinale.FemsId_Fire = Istanza where StatoIstanze like '%NUOVO%' and ServerArrivo LIKE '%${SRV}%'"
   SQLSTRING=${SQLSTRING}" order by ServerPartenza, FemsId_Fire;"
   #SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, StatoIstanze, daButtare from Elencoserver_Feng_Listafinale right join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare where StatoIstanze like '%butta%' order by ServerPartenza, FemsId_Fire"
-    
+
    echo "${SQLSTRING}"
 }
 
 # 155: Mostra la istanza e server FemsWS su YANG corrispondenti con filtro ad un istanza o server di partenza
 cod_0155(){
   SQLSTRING="select distinct Client_FemsWs, Client_Host, Server_FemsWs,	Server_Host "
-  SQLSTRING=${SQLSTRING}"from FemsWS_Circuit_Inst where Client_FemsWs LIKE '%${IST}%' and Client_Host LIKE '%${SRV}%'" 
-  echo "${SQLSTRING}" 
+  SQLSTRING=${SQLSTRING}"from FemsWS_Circuit_Inst where Client_FemsWs LIKE '%${IST}%' and Client_Host LIKE '%${SRV}%'"
+  echo "${SQLSTRING}"
 }
 
 # 156 Mostra la istanza e server FemsWS su YANG corrispondenti con filtro ad un istanza o server di arrivo
 cod_0156(){
   SQLSTRING="select distinct Client_FemsWs, Client_Host, Server_FemsWs,	Server_Host "
-  SQLSTRING=${SQLSTRING}"from FemsWS_Circuit_Inst where Server_FemsWs LIKE '%${IST}%' and Server_Host LIKE '%${SRV}%'" 
-  echo "${SQLSTRING}" 
+  SQLSTRING=${SQLSTRING}"from FemsWS_Circuit_Inst where Server_FemsWs LIKE '%${IST}%' and Server_Host LIKE '%${SRV}%'"
+  echo "${SQLSTRING}"
 }
 
 ################################### da completare per FIRE  ##################################################################
 # 157 Mostra la istanza e server FIRE su YANG corrispondenti ad un istanza o server di partenza
 cod_0157(){
   SQLSTRING="select ServerId,FireId,NetPort,DataCre "
-  SQLSTRING=${SQLSTRING}"from Fire where FireId LIKE '%${IST}%' and ServerId LIKE '%${SRV}%'" 
-  echo "${SQLSTRING}" 
+  SQLSTRING=${SQLSTRING}"from Fire where FireId LIKE '%${IST}%' and ServerId LIKE '%${SRV}%'"
+  echo "${SQLSTRING}"
 }
 
 # 158 Mostra la istanza e server su YANG corrispondenti ad un istanza o server di arrivo
 cod_0158(){
   SQLSTRING="select distinct Client_FemsWs, Client_Host, Server_FemsWs,	Server_Host "
-  SQLSTRING=${SQLSTRING}"from FemsWS_Circuit_Inst where Server_FemsWs LIKE '%${IST}%' and Server_Host LIKE '%${SRV}%'" 
-  echo "${SQLSTRING}" 
+  SQLSTRING=${SQLSTRING}"from FemsWS_Circuit_Inst where Server_FemsWs LIKE '%${IST}%' and Server_Host LIKE '%${SRV}%'"
+  echo "${SQLSTRING}"
 }
 ######################################################################################################################
 
 # 159 Mostra la istanza e server su TANGRAM corrispondenti ad un istanza o server di partenza
 cod_0159(){
   SQLSTRING="select ServerId,FemsId,EasId,Implementation, DataCre "
-  SQLSTRING=${SQLSTRING}"from Tangram_Eas_Srv where Implementation LIKE '%${TIP}%' and FemsId LIKE '%${IST}%' and ServerId LIKE '%${SRV}%'" 
-  echo "${SQLSTRING}" 
+  SQLSTRING=${SQLSTRING}"from Tangram_Eas_Srv where Implementation LIKE '%${TIP}%' and FemsId LIKE '%${IST}%' and ServerId LIKE '%${SRV}%'"
+  echo "${SQLSTRING}"
 }
 
 
@@ -296,7 +308,7 @@ cod_0161(){
    #echo "IST=${IST}"
    #exit
   SQLSTRING="select FemsId_Fire, TipoFems2, ServerPartenza, Da_Buttare.Eliminata, Da_Buttare.Note,StatoIstanze, ServerArrivo,  Check_Istanze.Note "
-  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare " 
+  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare "
   SQLSTRING=${SQLSTRING}"left join Check_Istanze on Elencoserver_Feng_Listafinale.FemsId_Fire = Istanza where TipoFems2 LIKE '%${TIP}%' and FemsId_Fire LIKE '%${IST}%' and ServerPartenza LIKE '%${SRV}%'"
   SQLSTRING=${SQLSTRING}" order by  FemsId_Fire, ServerPartenza;"
 
@@ -309,7 +321,7 @@ cod_0162(){
    #echo "IST=${IST}"
    #exit
   SQLSTRING="select Istanze, TipoIstanza, Macchina,  Versione, SpostareIn, Da_Buttare.Eliminata, Da_Buttare.Note,  Check_Istanze.Note "
-  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_2016 left join Da_Buttare on Elencoserver_Feng_2016.Macchina = Da_Buttare.daButtare " 
+  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_2016 left join Da_Buttare on Elencoserver_Feng_2016.Macchina = Da_Buttare.daButtare "
   SQLSTRING=${SQLSTRING}"left join Check_Istanze on Elencoserver_Feng_2016.Istanze = Istanza where TipoIstanza LIKE '%${TIP}%' and Istanze LIKE '%${IST}%' and Macchina LIKE '%${SRV}%'"
   SQLSTRING=${SQLSTRING}" order by  Istanza, Macchina;"
 
@@ -322,7 +334,7 @@ cod_0165(){
    #echo "IST=${IST}"
    #exit
   SQLSTRING="select FemsId_Fire, ServerPartenza, Istanze, ServerArrivo,  Macchina, TipoIstanza, SpostareIn, Eliminata "
-  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale join Elencoserver_Feng_2016 on Elencoserver_Feng_Listafinale.FemsId_Fire = Elencoserver_Feng_2016.Istanze " 
+  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale join Elencoserver_Feng_2016 on Elencoserver_Feng_Listafinale.FemsId_Fire = Elencoserver_Feng_2016.Istanze "
   SQLSTRING=${SQLSTRING}"left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare "
   SQLSTRING=${SQLSTRING}" where FemsId_Fire != '' and TipoIstanza LIKE '%${TIP}%' and Istanze LIKE '%${IST}%' and ServerPartenza LIKE '%${SRV}%'"
   SQLSTRING=${SQLSTRING}" order by  Istanze, ServerPartenza;"
@@ -335,7 +347,7 @@ cod_0166(){
    #echo "IST=${IST}"
    #exit
   SQLSTRING="select FemsId_Fire, ServerPartenza, Istanze, ServerArrivo,  Macchina, TipoIstanza, SpostareIn, Eliminata "
-  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale join Elencoserver_Feng_2016 on Elencoserver_Feng_Listafinale.FemsId_Fire = Elencoserver_Feng_2016.Istanze " 
+  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale join Elencoserver_Feng_2016 on Elencoserver_Feng_Listafinale.FemsId_Fire = Elencoserver_Feng_2016.Istanze "
   SQLSTRING=${SQLSTRING}"left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare "
   SQLSTRING=${SQLSTRING}" where FemsId_Fire != '' and TipoIstanza LIKE '%${TIP}%' and Istanze LIKE '%${IST}%' and Macchina LIKE '%${SRV}%'"
   SQLSTRING=${SQLSTRING}" order by  Istanze, Macchina;"
@@ -347,24 +359,24 @@ cod_0201(){
   #echo "0201: Recupera tutte le info sulle macchine di Test"
   SQLSTRING="select name, ip_address, ObjectCat, DataCre from Anag_Srv where name LIKE '%${SRV}%' order by Name"
   #SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, StatoIstanze, daButtare from Elencoserver_Feng_Listafinale right join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare where StatoIstanze like '%butta%' order by ServerPartenza, FemsId_Fire"
-    
-  echo "${SQLSTRING}" 
+
+  echo "${SQLSTRING}"
 }
 
 cod_0205(){
   #echo "0201: Recupera tutte le info sulle macchine di Test"
   SQLSTRING="select name, ip_address, ObjectCat, DataCre, Note, Data from Anag_Srv left join Note_Server on name = server where name LIKE '%${SRV}%' order by Name"
   #SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, StatoIstanze, daButtare from Elencoserver_Feng_Listafinale right join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare where StatoIstanze like '%butta%' order by ServerPartenza, FemsId_Fire"
-    
-  echo "${SQLSTRING}" 
+
+  echo "${SQLSTRING}"
 }
 
 cod_0210(){
   #echo "0210: Situazione macchine di test con macchine eliminate"
   SQLSTRING="select Name, Anag_Srv.IP_Address, Eliminata, Note_Server.Note, Data from Anag_Srv left join Da_Buttare on Name = Da_Buttare.daButtare left join Note_Server on Name = Note_Server.Server order by Name"
   #SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, StatoIstanze, daButtare from Elencoserver_Feng_Listafinale right join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare where StatoIstanze like '%butta%' order by ServerPartenza, FemsId_Fire"
-    
-  echo "${SQLSTRING}" 
+
+  echo "${SQLSTRING}"
 }
 
 
@@ -372,8 +384,8 @@ cod_0301(){
   #echo "0301: Lista la tabella dei check istanze"
   #SQLSTRING="select name, ip_address, ObjectCat, DataCre from Anag_Srv where name LIKE '%${SRV}%' order by Name"
   SQLSTRING="select id, Istanza, Tipo, Server, Note, DataCheck, Firma from Check_Istanze where Server LIKE '%${SRV}%' order by Istanza"
-  
-  echo "${SQLSTRING}" 
+
+  echo "${SQLSTRING}"
 }
 
 

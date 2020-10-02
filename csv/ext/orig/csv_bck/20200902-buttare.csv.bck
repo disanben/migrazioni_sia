@@ -1,0 +1,39 @@
+macchina da buttare;IP;Fisico_Virtuale;note;Eliminata
+CSITOA200822;10.201.158.112;F;cluster;
+CSITOB200814;10.200.99.102;F;cluster;
+CSITOG200803;10.6.37.124;F;cluster;
+GSITOD200803;10.201.159.111;F;;
+GSITOF200801;;;;
+GSITOG200801;;;;Y
+GSITOG200802;;;;
+HSITOG200804;;;cluster virtuale;
+HSITOG200805;;;cluster virtuale;
+KSITOA200804;;;;
+KSITOB200802;;;;
+KSITOB200816;;;;
+KSITOC200806;;;;
+KSITOF200801;;;;
+KSITOF200802;;;;
+KSITOG200807;;;;Y
+KSITOG200808;;;;Y
+NSITOA200820;;;nodo;
+NSITOA200821;;;nodo;
+NSITOB200812;;;nodo;
+NSITOB200813;;;nodo;
+NSITOG200801;;;nodo;
+NSITOG200802;;;nodo;
+NSITOG200815;;;nodo senza virtuali;
+NSITOG200816;;;nodo senza virtuali;
+PCP_HTTP_3;;;;
+USITOA200823;;;cluster virtuale;
+USITOA200824;;;cluster virtuale;
+USITOB200815;;;cluster virtuale;
+USITOB200816;;;cluster virtuale;
+USITOB200833-BI;;;non so a quale nodo fisico è associato;
+XMSPRILAB08;;;;
+ZSITOA200802;;;;
+ZSITOA200806;;;;
+ZSITOA200852;;;;
+ZSITOD200802;;;;
+ZSITOG200803;;;;
+ZSITOLLABB01;;;;

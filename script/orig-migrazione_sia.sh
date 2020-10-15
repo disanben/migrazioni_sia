@@ -29,28 +29,10 @@ TIPO_FIRE="FIRE"
 TIPO_JAVAMQT2S="JAVAMQT2S"
 TIPO_JAVAMQT2SG="JAVAMQT2SG"
 
-FASE_00="NUOVO_DA_CREARE"
-FASE_01="NUOVO_w2016_OK"
-FASE_02="NUOVO_FENG_OK"
-FASE_03="NON_RAGG-NON_MIGR"
-FASE_04="RAGGIUNG-NON_MIGR"
-FASE_05="MIGRAZIONE_IN_CORSO"
-FASE_06="MIGRATO_DA_AGGIORN."
-FASE_07="NON_RAGG-MIGRATO"
-FASE_08="RAGGIUNG-MIGRATO"
-FASE_09="ELIMINATO_DA_COMUNIC"
-FASE_10="ELIMINATO"
-FASE_15="DISATER_RECOVERY"
-FASE_20="RAGG_DA_ELIMINARE"
-FASE_21="NON_RAGG_DA_ELIMINARE"
-
-
 SERVER="%"
 ISTANZA="%"
 TIPO_IST="%"
 NOTE="%"
-IPA="%"
-FASE_SRV="%"
 
 PASS=( $SERVER $ISTANZA $TIPO_IST $NOTE )
 
@@ -62,7 +44,7 @@ prePrint () {
  echo
  echo
  echo "####################################################################"
-
+ 
 }
 
 postPrint () {
@@ -94,16 +76,8 @@ printUsage () {
    echo " -f [SQL QUERY] : Consente di passare una query free in formato sql"
    echo " -l [Cod] : Consente di lanciare una ricerca precaricata. "
    echo "            Passando il codice 0 si visualizza la lista di tutte le ricerche caricate"
-   echo ""
-   echo " -s [VAL] : Imposta lo stato di un server aggiornando la data."
-   echo "      use:  migrazione_sia -S [Server]  -F [Fase]  -s"
-   echo ""
-   echo " -i [VAL] : Imposta lo stato di una istanza aggiornando la data."
-   echo "      use:  migrazione_sia -I [Istanza]  -F [Fase]  -i"
-   echo ""
    echo "-------------------------------------------------------------------------------------------"
    echo " -S [SERVER] : Consente di passare il nome del server"
-   echo " -A [IP_ADDRESS] : Consente di passare il valore IP Address del server"
    echo " -I [ISTANZA]: Consente di passare il nome della istanza"
    echo " -T [TIPO ISTANZA]: Consente di passare il tipo di istanza:"
    echo "                    1. FEMSWS"
@@ -114,20 +88,6 @@ printUsage () {
    echo "                    6. JAVAMQT2S"
    echo "                    7. JAVAMQT2SG"
    echo " -N [NOTA]: Consente di passare delle note"
-   echo " -F [FASE]: I valori permessi sono: 00 Nuovo da Creare."
-   echo "                                    01 Nuovo - w2016 PASSED."
-   echo "                                    02 Nuovo - FENG PASSED."
-   echo "                                    03 Non Raggiungibile da Migrare."
-   echo "                                    04 Raggiungibile da Migrare."
-   echo "                                    05 Migrazione in corso."
-   echo "                                    06 Migrato da allineare con Tang/Yang."
-   echo "                                    07 Non Raggiungibile Migrato."
-   echo "                                    08 Raggiungibile Migrato."
-   echo "                                    09 Eliminato - Da comunicare IT"
-   echo "                                    10 Eliminato"
-   echo "                                    15 Disater Recovery"
-   echo "                                    20 Raggiungibile da Eliminare"
-   echo "                                    21 Non Raggiungibile da Eliminare"
    echo ""
    echo "-------------------------------------------------------------------------------------------"
    echo " -H: Export della query in formato HTML"
@@ -143,8 +103,7 @@ printUsage () {
 
 printList () {
    echo "------------------------------------------------------------------------------------------"
-   echo "0100: Ricerca libera di tutto da Elenco_Server_Listafinale per tipo, istanza e server partenza"
-   echo "0101: Ricerca libera di tutto da Elenco_Server_Listafinale per tipo, istanza e server arrivo"
+   echo "0101: Ricerca libera di tutto da Elenco_Server_Listafinale per tipo, istanza e server partenza"
    echo "0102: Macchine presenti nelle due tabelle ListaFinale ServerPartenza) e 2016 (macchina)"
    echo "0103: Istanze migrate e situazione macchine da buttare"
    echo "0104: Lista delle istanze fatte per server di partenza"
@@ -156,7 +115,7 @@ printList () {
    echo "0152: Mostra le istanze da migrare su nuovo server da definire con filtro su server arrivo"
    echo "0155: Mostra la istanza e server FemsWS su YANG corrispondenti con filtro ad un istanza o server di partenza"
    echo "0156: Mostra la istanza e server FemsWS su YANG corrispondenti con filtro ad un istanza o server di arrivo"
-   echo "0157: Mostra la istanza e server FIRE su YANG corrispondenti ad un istanza o server di partenza"
+   echo "0157: Mostra la istanza e server FIRE su YANG corrispondenti ad un istanza o server di partenza"   
    echo "0159: Mostra la istanza e server su TANGRAM con filtri"
    echo "0161: Mostra tutte le istanze e stato con filtri da tabella listafinale"
    echo "0162: Mostra tutte le istanze e stato con filtri da tabella 2016"
@@ -166,17 +125,8 @@ printList () {
    echo "0201: Recupera tutte le info sulle macchine di Test"
    echo "0205: Recupera tutte le info sulle macchine di Test con commenti"
    echo "0210: Situazione macchine di test con macchine eliminate"
-   echo "0251: Situazione stato delle istanze per server partenza"
-   echo "0252: Situazione stato delle istanze in relazione a lista finale per server partenza"
-   echo "0253: Situazione stato delle istanze per server arrivo"
-   echo "0254: Situazione stato delle istanze in relazione a lista finale per server arrivo"
-   echo "0255: Situazione stato delle istanze in relazione a lista 2016"
-   echo "0261: Situazione stato dei servers"
    echo "------------------------------------------------------------------------------------------"
    echo "0301: Lista la tabella dei check istanze"
-   echo "0305: Ricerca Istanze con Stato da listafinale"
-   echo "0306: Ricerca Istanze con Stato da 2016"
-   echo "0350: Ricerca Server con Stato dato dalla tabella stato_server"
    echo "------------------------------------------------------------------------------------------"
    echo ""
    echo ""
@@ -185,12 +135,12 @@ printList () {
 
 queryCommon () {
    echo "HTML=${HTML}"
-
+   
    if [[ $HTML -eq 1 ]]
    then
-       QUERY_TO_SEND="mysql -H -u${USER} -p${PSW} ${DATABASE_NAME} -e "
+       QUERY_TO_SEND="mysql -H -u${USER} -p${PSW} ${DATABASE_NAME} -e "   
    else
-
+ 
        QUERY_TO_SEND="mysql -u${USER} -p${PSW} ${DATABASE_NAME} -e "
    fi
    #echo ${QUERY_TO_SEND}
@@ -216,31 +166,29 @@ freeQuery () {
 
 updateDB (){
    echo "Aggiornamento del DB"
-
+   
    #Effettua il backup del DB
    backupDB
-
+   
    #Salva le tabelle interne
    exportInternalTables
-
+   
    #Creazione del database
    ./createDatabase.sh
-
+   
    #Aggiornamento delle tabelle esterne
    ./loadDatabase.sh
-
+   
    #ReWrite delle tabelle interne
    reWriteInternal
 }
 
 exportInternalTables (){
    echo "Esportazione delle tabelle interne del DB"
-
+   
    #Esportazione delle tabelle
    exportCheckIstanzeTable
-   exportNoteServerTable
-   exportStatoIstanzaTable
-   exportStatoServerTable
+   exportNoteServerTable 
 }
 
 backupDB (){
@@ -252,8 +200,6 @@ reWriteInternal(){
     echo "Riscrittura delle tabelle interne del DB"
     reWriteCheckIstanzeTable
     reWriteNoteServerTable
-    reWriteStatoIstanzaTable
-    reWriteStatoServerTable
 }
 
 
@@ -266,7 +212,7 @@ PAR="$@"
 
 
 
-while getopts "acnd:f:hiHl:sA:F:S:I:T:N:UBEW" arg; do
+while getopts "acnd:f:hHl:S:I:T:N:UBEW" arg; do
   case $arg in
     H)
       HTML=1
@@ -291,7 +237,7 @@ while getopts "acnd:f:hiHl:sA:F:S:I:T:N:UBEW" arg; do
       eval ${QUERY_TO_SEND}
       break
       ;;
-    f)
+    f)      
       FREEQ="$OPTARG"
       queryCommon
       freeQuery "${FREEQ}"
@@ -325,116 +271,18 @@ while getopts "acnd:f:hiHl:sA:F:S:I:T:N:UBEW" arg; do
          printList
       else
         queryCommon
-        SQLCOMMAND=$( getSqlCommand $OPT $SERVER $ISTANZA $TIPO_IST $NOTE $IPA $FASE_SRV)
-        echo "-----> Query inviata:"
-        echo ${SQLCOMMAND}
+        SQLCOMMAND=$( getSqlCommand $OPT $SERVER $ISTANZA $TIPO_IST $NOTE )
         QUERY_TO_SEND="${QUERY_TO_SEND}\"${SQLCOMMAND}\""
         eval ${QUERY_TO_SEND}
       break
       fi
       break
       ;;
-    s)
-        aggiornaStato ${SERVER} ${FASE_SRV} ${FASE_STR}
-        break
-        ;;
-    i)
-        aggiornaIstanza ${ISTANZA} ${FASE_SRV} ${FASE_STR}
-        break
-        ;;
-    F)
-        FASE_SRV="$OPTARG"
-        echo "Stato Server: ${FASE_SRV}"
-        case $FASE_SRV in
-           0)
-              FASE_STR=${FASE_00}
-              echo "Stato Server: ${FASE_00}"
-              #break
-              ;;
-           1)
-           FASE_STR=${FASE_01}
-           echo "Stato Server: ${FASE_01}"
-              #break
-              ;;
-           2)
-              FASE_STR=${FASE_02}
-              echo "Stato Server: ${FASE_02}"
-                 #break
-                 ;;
-           3)
-           FASE_STR=${FASE_03}
-           echo "Stato Server: ${FASE_03}"
-              #break
-              ;;
-           4)
-           FASE_STR=${FASE_04}
-           echo "Stato Server: ${FASE_04}"
-              #break
-              ;;
-           5)
-              FASE_STR=${FASE_05}
-              echo "Stato Server: ${FASE_05}"
-              #break
-              ;;
-           6)
-              FASE_STR=${FASE_06}
-              echo "Stato Server: ${FASE_06}"
-              #break
-              ;;
-            7)
-                FASE_STR=${FASE_07}
-                echo "Stato Server: ${FASE_07}"
-                #break
-                ;;
-            8)
-                FASE_STR=${FASE_08}
-                echo "Stato Server: ${FASE_08}"
-                #break
-                ;;
-            9)
-                FASE_STR=${FASE_09}
-                echo "Stato Istanza/Server: ${FASE_09}"
-                #break
-                ;;
-            10)
-                FASE_STR=${FASE_10}
-                echo "Stato Istanza/Server: ${FASE_10}"
-                #break
-                ;;
-            15)
-                FASE_STR=${FASE_15}
-                echo "Stato Istanza/Server: ${FASE_15}"
-                #break
-                ;;
-             20)
-                FASE_STR=${FASE_20}
-                echo "Stato Istanza/Server: ${FASE_20}"
-                #break
-                ;;
-             21)
-                FASE_STR=${FASE_21}
-                echo "Stato Istanza/Server: ${FASE_21}"
-                #break
-                ;;
-            *)
-              echo ""
-              echo "*******************************************"
-              echo "** Fase: ${FASE_SRV} NON RICONOSCIUTA"
-              echo "*******************************************"
-              exit
-        esac
-        #break
-        ;;
     S)
       SERVER="$OPTARG"
       echo "Inserimento per server: ${SERVER}"
       #break
       ;;
-    A)
-        IPA="$OPTARG"
-        echo "Inserimento per IP Address: ${IPA}"
-        #break
-        ;;
     T)
       TIPO_IST="$OPTARG"
       echo "Tipo Istanza: ${TIPO_IST}"
@@ -474,7 +322,7 @@ while getopts "acnd:f:hiHl:sA:F:S:I:T:N:UBEW" arg; do
             echo "Istanza: ${TIPO_JAVAMQT2SG}"
             #break
             ;;
-          *)
+          *) 
             echo ""
             echo "*******************************************"
             echo "** Istanza: ${TIPO_IST} NON RICONOSCIUTA"
@@ -520,3 +368,10 @@ if [ -z "$PAR"  ]
 then
    printUsage
 fi
+
+
+
+
+
+
+

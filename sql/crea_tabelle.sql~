@@ -26,7 +26,7 @@ ALTER TABLE `Anag_Srv` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`i
 #-- --------------------------------------
 DROP TABLE IF EXISTS `Elencoserver_Feng_Listafinale`;
 
-CREATE TABLE `Elencoserver_Feng_Listafinale` (
+CREATE TABLE `Elencoserver_Feng_Listafinale` ( 
 `Sito` VARCHAR(15),
 `ServerPartenza` VARCHAR(15),
 `SitoArrivo` VARCHAR(15),
@@ -44,13 +44,13 @@ CREATE TABLE `Elencoserver_Feng_Listafinale` (
 `Performance` VARCHAR(15),
 `Vers` VARCHAR(15),
 `IP` VARCHAR(30),
-`Colonna22` VARCHAR(15),
+`Colonna22` VARCHAR(15), 
 `Note` VARCHAR(30),
-`Col23` VARCHAR(5),
-`Col24` VARCHAR(5),
-`Col25` VARCHAR(5),
-`Col26` VARCHAR(5),
-`Col27` VARCHAR(5),
+`Col23` VARCHAR(5), 
+`Col24` VARCHAR(5), 
+`Col25` VARCHAR(5), 
+`Col26` VARCHAR(5), 
+`Col27` VARCHAR(5), 
 `DataCre` VARCHAR(10));
 
 ALTER TABLE `Elencoserver_Feng_Listafinale` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
@@ -64,7 +64,7 @@ DROP TABLE IF EXISTS `Elencoserver_Feng_2016`;
 CREATE TABLE `Elencoserver_Feng_2016` (
 `Macchina` VARCHAR(15),
 `TipoMacchina` VARCHAR(15),
-`SpostareIn` VARCHAR(50),
+`SpostareIn` VARCHAR(15),
 `Istanze` VARCHAR(15),
 `TipoIstanza` VARCHAR(15),
 `EasId` VARCHAR(15),
@@ -321,7 +321,7 @@ ALTER TABLE `Tangram_Eas_Srv` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY 
 #-------------------------------
 #--    Table Tangram_Eas_Info
 #-------------------------------
-DROP TABLE IF EXISTS `Tangram_Eas_Info`;
+DROP TABLE IF EXISTS `Tangram_Eas_Srv`;
 
 CREATE TABLE `Tangram_Eas_Info` (
 `Eas` VARCHAR(15),
@@ -390,35 +390,10 @@ DROP TABLE IF EXISTS `Note_Server`;
 
 CREATE TABLE `Note_Server` (
 `Server` VARCHAR(15),
-`Stato` INT(11),
-`StatoDesc` VARCHAR(50),
 `Note` VARCHAR(100),
 `Data` VARCHAR(25));
 
 ALTER TABLE `Note_Server` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
 
-#-- --------------------------------------
-#--    Stato_Server
-#-- --------------------------------------
-DROP TABLE IF EXISTS `Stato_Server`;
 
-CREATE TABLE `Stato_Server` (
-`Server` VARCHAR(15),
-`Stato` INT(11),
-`StatoDesc` VARCHAR(50),
-`Data` VARCHAR(25));
 
-ALTER TABLE `Stato_Server` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
-
-#-- --------------------------------------
-#--    Stato_Istanza
-#-- --------------------------------------
-DROP TABLE IF EXISTS `Stato_Istanza`;
-
-CREATE TABLE `Stato_Istanza` (
-`Istanza` VARCHAR(15),
-`Stato` INT(11),
-`StatoDesc` VARCHAR(50),
-`Data` VARCHAR(25));
-
-ALTER TABLE `Stato_Istanza` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);

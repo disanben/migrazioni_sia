@@ -34,7 +34,7 @@ IN_FILENAME_2016=$CSV_PATH_EXT_ORIG"elencoserver-2016.csv"
 IN_FILENAME_BUTTARE=$CSV_PATH_EXT_ORIG"buttare.csv"
 IN_FILENAME_ANAGRAFICA=$CSV_PATH_EXT_ORIG"anagsrv.csv"
 
-IN_FILENAME_FIRE=$CSV_PATH_EXT_ORIG"fire.csv" 
+IN_FILENAME_FIRE=$CSV_PATH_EXT_ORIG"fire.csv"
 IN_FILENAME_FEMSWS=$CSV_PATH_EXT_ORIG"femsws.csv"
 IN_FILENAME_ICETOP=$CSV_PATH_EXT_ORIG"fire-ice-top.csv"
 IN_FILENAME_FIRESPEC=$CSV_PATH_EXT_ORIG"fire-spec.csv"
@@ -46,6 +46,8 @@ IN_FILENAME_TANGEAS=$CSV_PATH_EXT_ORIG"tangram-eas.csv"
 IN_FILENAME_TANGEASSRV=$CSV_PATH_EXT_ORIG"tangram-eas-srv.csv"
 IN_FILENAME_TANGEASINFO=$CSV_PATH_EXT_ORIG"tangram-eas-info.csv"
 IN_FILENAME_TANGFEMS=$CSV_PATH_EXT_ORIG"tangram-fems.csv"
+IN_FILENAME_SERVERLIST=$CSV_PATH_EXT_ORIG"serverlist.csv"
+
 
 
 #Table Name
@@ -54,7 +56,7 @@ TABLENAME_2016="Elencoserver_Feng_2016"
 TABLENAME_BUTTARE="Da_Buttare"
 TABLENAME_ANAGRAFICA="Anag_Srv"
 
-TABLENAME_FIRE="Fire" 
+TABLENAME_FIRE="Fire"
 TABLENAME_FEMSWS="FemsWS"
 TABLENAME_ICETOP="Fire_Ice_Top"
 TABLENAME_FIRESPEC="Fire_Spec"
@@ -66,6 +68,7 @@ TABLENAME_TANGEAS="Tangram_Eas"
 TABLENAME_TANGEASSRV="Tangram_Eas_Srv"
 TABLENAME_TANGEASINFO="Tangram_Eas_Info"
 TABLENAME_TANGFEMS="Tangram_Fems"
+TABLENAME_SERVERLIST="Serverlist"
 
 #File Name csv in Output
 FILENAME_LISTAFINALE=$CSV_PATH_EXT_WORK$TABLENAME_LISTAFINALE.csv
@@ -85,6 +88,7 @@ FILENAME_TANGEAS=$CSV_PATH_EXT_WORK$TABLENAME_TANGEAS.csv
 FILENAME_TANGEASSRV=$CSV_PATH_EXT_WORK$TABLENAME_TANGEASSRV.csv
 FILENAME_TANGEASINFO=$CSV_PATH_EXT_WORK$TABLENAME_TANGEASINFO.csv
 FILENAME_TANGFEMS=$CSV_PATH_EXT_WORK$TABLENAME_TANGFEMS.csv
+FILENAME_SERVERLIST=$CSV_PATH_EXT_WORK$TABLENAME_SERVERLIST.csv
 
 #Date dei files csv
 DATAFILE_LISTAFINALE=""
@@ -104,6 +108,7 @@ DATAFILE_TANGEAS=""
 DATAFILE_TANGEASSRV=""
 DATAFILE_TANGEASINFO=""
 DATAFILE_TANGFEMS=""
+DATAFILE_SERVERLIST=""
 
 #File Name cfg
 CFG_FILE=$CFG_PATH"users.cfg"
@@ -125,10 +130,10 @@ cd -
 #################################################
 # Conversione dei files a UNIX
 #################################################
-dos2unix $PRE_FILENAME_ANAGRAFICA
-dos2unix $IN_FILENAME_LISTAFINALE
-dos2unix $IN_FILENAME_2016
-dos2unix $IN_FILENAME_BUTTARE
+#dos2unix $PRE_FILENAME_ANAGRAFICA
+#dos2unix $IN_FILENAME_LISTAFINALE
+#dos2unix $IN_FILENAME_2016
+#dos2unix $IN_FILENAME_BUTTARE
 
 
 
@@ -141,14 +146,11 @@ if [ ! -f $PRE_FILENAME_ANAGRAFICA ]; then
     exit 0
 fi
 
-
-#cat $PRE_FILENAME_ANAGRAFICA | sed '3d' | sed 's/,/;/g' | sed 's/ /,/1' | sed 's/ /,/1' | sed 's/ //g' > $IN_FILENAME_ANAGRAFICA
-#cat $PRE_FILENAME_ANAGRAFICA | sed '3d' | sed 's/,/;/g' | sed 's/ /,/1' | sed 's/CN/,CN/1' > $IN_FILENAME_ANAGRAFICA
 cat $PRE_FILENAME_ANAGRAFICA | sed '3d' | sed 's/,/-/g' | sed 's/ /;/1' | sed 's/CN/;CN/1' > $IN_FILENAME_ANAGRAFICA
 
 #################################################
 # verifica della presenza dei files cvs
-################################################# 
+#################################################
 if [ ! -f $IN_FILENAME_LISTAFINALE ]; then
     echo "$IN_FILENAME_LISTAFINALE does NOT exist"
     exit 0
@@ -235,6 +237,11 @@ if [ ! -f $IN_FILENAME_TANGFEMS ]; then
     exit 0
 fi
 
+if [ ! -f $IN_FILENAME_SERVERLIST ]; then
+    echo "$IN_FILENAME_SERVERLIST does NOT exist"
+    exit 0
+fi
+
 
 
 
@@ -251,7 +258,7 @@ if [ ! -f $TABLE_HEADER ]; then
     exit 0
 fi
 
- 
+
 #################################################
 # sostituzione del ; in , come separatore
 #################################################
@@ -284,6 +291,7 @@ if [ $FILESYSTEM -eq 1 ]; then
 	DATAFILETANGEASSRV=`ls -l $IN_FILENAME_TANGEASSRV | awk '{print $6"-"$7}'`
 	DATAFILETANGEASINFO=`ls -l $IN_FILENAME_TANGEASINFO | awk '{print $6"-"$7}'`
 	DATAFILETANGFEMS=`ls -l $IN_FILENAME_TANGFEMS | awk '{print $6"-"$7}'`
+  DATAFILESERVERLIST=`ls -l $IN_FILENAME_SERVERLIST | awk '{print $6"-"$7}'`
 fi
 
 ##################################################################
@@ -308,6 +316,7 @@ if [ $FILESYSTEM -eq 2 ]; then
 	DATAFILETANGEASSRV=`ls -l $IN_FILENAME_TANGEASSRV | awk '{print $7"-"$8}'`
 	DATAFILETANGEASINFO=`ls -l $IN_FILENAME_TANGEASINFO | awk '{print $7"-"$8}'`
 	DATAFILETANGFEMS=`ls -l $IN_FILENAME_TANGFEMS | awk '{print $7"-"$8}'`
+  DATAFILESERVERLIST=`ls -l $IN_FILENAME_SERVERLIST | awk '{print $7"-"$8}'`
 fi
 #echo "${DATAFILELISTAFINALE}"
 
@@ -334,6 +343,7 @@ cat $IN_FILENAME_TANGEAS | sed "s/$/, ${DATAFILETANGEAS}/g" > $FILENAME_TANGEAS.
 cat $IN_FILENAME_TANGEASSRV | sed "s/$/, ${DATAFILETANGEASSRV}/g" > $FILENAME_TANGEASSRV.tmp
 cat $IN_FILENAME_TANGEASINFO | sed "s/$/, ${DATAFILETANGEASINFO}/g" > $FILENAME_TANGEASINFO.tmp
 cat $IN_FILENAME_TANGFEMS | sed "s/$/, ${DATAFILETANGFEMS}/g" > $FILENAME_TANGFEMS.tmp
+cat $IN_FILENAME_SERVERLIST | sed "s/$/, ${DATAFILESERVERLIST}/g" > $FILENAME_SERVERLIST.tmp
 
 #echo "03"
 ##########################################################
@@ -347,7 +357,7 @@ tail -n +2 $FILENAME_LISTAFINALE.tmp >> $FILENAME_LISTAFINALE
 cat $TABLE_HEADER | head -n 5 | tail -n 1 > $FILENAME_2016
 tail -n +2 $FILENAME_2016.tmp >> $FILENAME_2016
 
-#Crea file da_buttare.csv con le giuste intestazioni 
+#Crea file da_buttare.csv con le giuste intestazioni
 cat $TABLE_HEADER | head -n 7 | tail -n 1 > $FILENAME_BUTTARE
 tail -n +2 $FILENAME_BUTTARE.tmp >> $FILENAME_BUTTARE
 
@@ -392,6 +402,8 @@ tail -n +2 $FILENAME_TANGEASINFO.tmp >> $FILENAME_TANGEASINFO
 cat $TABLE_HEADER | head -n 33 | tail -n 1 > $FILENAME_TANGFEMS
 tail -n +2 $FILENAME_TANGFEMS.tmp >> $FILENAME_TANGFEMS
 
+cat $TABLE_HEADER | head -n 33 | tail -n 1 > $FILENAME_SERVERLIST
+tail -n +2 $FILENAME_SERVERLIST.tmp >> $FILENAME_SERVERLIST
 
 #echo "04"
 
@@ -418,7 +430,7 @@ mysqlimport --ignore-lines=1 --fields-terminated-by=',' --local -uroot -proot mi
 mysqlimport --ignore-lines=1 --fields-terminated-by=',' --local -uroot -proot migrazioni  $FILENAME_TANGEASSRV
 mysqlimport --ignore-lines=1 --fields-terminated-by=',' --local -uroot -proot migrazioni  $FILENAME_TANGEASINFO
 mysqlimport --ignore-lines=1 --fields-terminated-by=',' --local -uroot -proot migrazioni  $FILENAME_TANGFEMS
-
+mysqlimport --ignore-lines=1 --fields-terminated-by=';' --local -uroot -proot migrazioni  $FILENAME_SERVERLIST
 
 #LOAD DATA INFILE
 #mysql --defaults-extra-file=$CFG_FILE -u root  migrazioni -e "select * from $TABLENAME_BUTTARE";

@@ -414,8 +414,8 @@ cod_0166(){
    # 0165: Mostra tutte le istanze presenti sia nella tabella listafinale che 2016 per Macchina
    #echo "IST=${IST}"
    #exit
-  SQLSTRING="select FemsId_Fire, ServerPartenza, Istanze, ServerArrivo,  Macchina, TipoIstanza, SpostareIn, Eliminata "
-  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale join Elencoserver_Feng_2016 on Elencoserver_Feng_Listafinale.FemsId_Fire = Elencoserver_Feng_2016.Istanze "
+  SQLSTRING="select FemsId_Fire, ServerPartenza, Istanze, TipoIstanza, ServerArrivo,  Macchina, B.ip, Versione,  SpostareIn, Eliminata  "
+  SQLSTRING=${SQLSTRING}"from Elencoserver_Feng_Listafinale join Elencoserver_Feng_2016 as B on Elencoserver_Feng_Listafinale.FemsId_Fire = B.Istanze "
   SQLSTRING=${SQLSTRING}"left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare "
   SQLSTRING=${SQLSTRING}" where FemsId_Fire != '' and TipoIstanza LIKE '%${TIP}%' and Istanze LIKE '%${IST}%' and Macchina LIKE '%${SRV}%'"
   SQLSTRING=${SQLSTRING}" order by  Istanze, Macchina;"

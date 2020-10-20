@@ -360,7 +360,57 @@ CREATE TABLE `Tangram_Fems` (
 
 ALTER TABLE `Tangram_Fems` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
 
+#------------------------------------
+#--    Table serverlist di PizzoTool
+#------------------------------------
+DROP TABLE IF EXISTS `Serverlist`;
 
+CREATE TABLE `Serverlist` (
+`Server`     VARCHAR(15),
+`OS`         VARCHAR(15),
+`Model`      VARCHAR(15),
+`RIDEC_V`    VARCHAR(15),
+`IBM_MQ_V`   VARCHAR(15),
+`HP_PSP_V`   VARCHAR(15),
+`MSMQ_Wait_time`    VARCHAR(15),
+`MSMQ_MachQuot`     VARCHAR(15),
+`MSMQ_EveryoneSend` VARCHAR(15),
+`IBM_MQ_V`          VARCHAR(15),
+`Cluster_Service`   VARCHAR(15),
+`MSMQ_Depend`       VARCHAR(15),
+`SQL_Dependences`   VARCHAR(15),
+`MSMQ_Hot_Fix`      VARCHAR(15),
+`MSDTC_Hot_Fix`     VARCHAR(15),
+`FEMS_V`            VARCHAR(15),
+`TCPIP_V`           VARCHAR(15),
+`w32tm_MaxPollInterval_Member`  VARCHAR(15),
+`w32tm_MinPollInterval_Member`  VARCHAR(15),
+`w32tm_PollAdjustFactor_Member` VARCHAR(15),
+`DNS_Server`       VARCHAR(15),
+`RPC_ports`         VARCHAR(15),
+`DNS_Hot_Fix`       VARCHAR(15),
+`Attacco_Porta_UDP_Chiusa`  VARCHAR(15),
+`SQL_SP3_Single_Serv`       VARCHAR(15),
+`SQL_SP3_Nodi_Cluster`      VARCHAR(15),
+`Patch_Semaphore`           VARCHAR(15),
+`Patch_P2000`               VARCHAR(15),
+`MSMQ_LongLiveTime`         VARCHAR(15),
+`MSMQ_LongLiveTime`         VARCHAR(15),
+`MSMQ_LongLiveTime`         VARCHAR(15),
+`Manifest_V`                VARCHAR(15),
+`Patch_Time_Wait`           VARCHAR(15),
+`Backup_System_State`       VARCHAR(15),
+`Numero_CPU_Core_Type`      VARCHAR(15),
+`RAM`                       VARCHAR(15),
+`Deep_Security_V`           VARCHAR(15),
+`Patch_Kerberos`            VARCHAR(15),
+`PostgreSQL_check_version`  VARCHAR(15)
+`FONTS_OpenType_System32`   VARCHAR(15),
+`FONTS_OpenType_SysWOW64`   VARCHAR(15),
+`Tcpip_V6_Disabled`         VARCHAR(15),
+`Ip_Address;ActiveMQ`       VARCHAR(25));
+
+ALTER TABLE `Serverlist` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`)
 
 
 

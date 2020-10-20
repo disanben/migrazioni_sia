@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS `Anag_Srv`;
 
 CREATE TABLE `Anag_Srv` (
 `Name` VARCHAR(15),
-`IP_Address` VARCHAR(15),
+`IP_Address` VARCHAR(25),
 `ObjectCat` VARCHAR(50),
 `DataCre` VARCHAR(10));
 
@@ -71,7 +71,7 @@ CREATE TABLE `Elencoserver_Feng_2016` (
 `Ruolo` VARCHAR(15),
 `Performance` VARCHAR(15),
 `Versione` VARCHAR(25),
-`ip` VARCHAR(15),
+`ip` VARCHAR(25),
 `SO` VARCHAR(15),
 `Note` VARCHAR(15),
 `DataCre` VARCHAR(10));

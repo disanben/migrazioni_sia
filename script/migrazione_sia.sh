@@ -164,6 +164,7 @@ printList () {
    echo "0166: Mostra tutte le istanze presenti sia nella tabella listafinale che 2016 con filtro per macchina 2016"
    echo "------------------------------------------------------------------------------------------"
    echo "0201: Recupera tutte le info sulle macchine di Test"
+   echo "0202: Recupera tutte le info dal PizzoTool"
    echo "0205: Recupera tutte le info sulle macchine di Test con commenti"
    echo "0210: Situazione macchine di test con macchine eliminate"
    echo "0251: Situazione stato delle istanze per server partenza"

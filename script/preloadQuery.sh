@@ -151,6 +151,12 @@ getSqlCommand () {
          #echo "SQL passed: ${SQL}"
          exit
          ;;
+      0202)
+        cod_0202
+        SQL=$( cod_0202 )
+        #echo "SQL passed: ${SQL}"
+        exit
+        ;;
       0205)
          cod_0205
          SQL=$( cod_0205 )
@@ -427,6 +433,16 @@ cod_0201(){
   #echo "0201: Recupera tutte le info sulle macchine di Test"
   SQLSTRING="select name, ip_address, ObjectCat, DataCre from Anag_Srv where name LIKE '%${SRV}%' order by Name"
   #SQLSTRING="select ServerPartenza, FemsId_Fire, TipoFems2, StatoIstanze, daButtare from Elencoserver_Feng_Listafinale right join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare where StatoIstanze like '%butta%' order by ServerPartenza, FemsId_Fire"
+
+  echo "${SQLSTRING}"
+}
+
+cod_0202(){
+  #echo "0202: Recupera tutte le info dal PizzoTool"
+  SQLSTRING="select Server, OS, FEMS_V, DNS_Server, RPC_ports,  Numero_CPU_Core_Type, RAM,  Ip_Address,  ActiveMQ "
+  SQLSTRING=${SQLSTRING}"from Serverlist  "
+  SQLSTRING=${SQLSTRING}" where  Server LIKE '%${SRV}%' and Ip_Address LIKE '%${IPA}%'"
+  SQLSTRING=${SQLSTRING}" order by  Server;"
 
   echo "${SQLSTRING}"
 }

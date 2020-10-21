@@ -330,6 +330,7 @@ cat $IN_FILENAME_ANAGRAFICA | sed "s/$/; ${DATAFILEANAGRAFICA}/g" > $FILENAME_AN
 cat $IN_FILENAME_LISTAFINALE | sed "s/$/; ${DATAFILELISTAFINALE}/g" > $FILENAME_LISTAFINALE.tmp
 cat $IN_FILENAME_2016 | sed "s/$/; ${DATAFILE2016}/g" > $FILENAME_2016.tmp
 cat $IN_FILENAME_BUTTARE | sed "s/$/; ${DATAFILEBUTTARE}/g" > $FILENAME_BUTTARE.tmp
+cat $IN_FILENAME_SERVERLIST | sed "s/$/; ${DATAFILESERVERLIST}/g" > $FILENAME_SERVERLIST.tmp
 
 cat $IN_FILENAME_FIRE | sed "s/$/, ${DATAFILEFIRE}/g" > $FILENAME_FIRE.tmp
 cat $IN_FILENAME_FEMSWS | sed "s/$/, ${DATAFILEFEMSWS}/g" > $FILENAME_FEMSWS.tmp
@@ -343,7 +344,7 @@ cat $IN_FILENAME_TANGEAS | sed "s/$/, ${DATAFILETANGEAS}/g" > $FILENAME_TANGEAS.
 cat $IN_FILENAME_TANGEASSRV | sed "s/$/, ${DATAFILETANGEASSRV}/g" > $FILENAME_TANGEASSRV.tmp
 cat $IN_FILENAME_TANGEASINFO | sed "s/$/, ${DATAFILETANGEASINFO}/g" > $FILENAME_TANGEASINFO.tmp
 cat $IN_FILENAME_TANGFEMS | sed "s/$/, ${DATAFILETANGFEMS}/g" > $FILENAME_TANGFEMS.tmp
-cat $IN_FILENAME_SERVERLIST | sed "s/$/, ${DATAFILESERVERLIST}/g" > $FILENAME_SERVERLIST.tmp
+
 
 #echo "03"
 ##########################################################
@@ -402,7 +403,7 @@ tail -n +2 $FILENAME_TANGEASINFO.tmp >> $FILENAME_TANGEASINFO
 cat $TABLE_HEADER | head -n 33 | tail -n 1 > $FILENAME_TANGFEMS
 tail -n +2 $FILENAME_TANGFEMS.tmp >> $FILENAME_TANGFEMS
 
-cat $TABLE_HEADER | head -n 33 | tail -n 1 > $FILENAME_SERVERLIST
+cat $TABLE_HEADER | head -n 35 | tail -n 1 > $FILENAME_SERVERLIST
 tail -n +2 $FILENAME_SERVERLIST.tmp >> $FILENAME_SERVERLIST
 
 #echo "04"
@@ -417,6 +418,7 @@ mysqlimport --ignore-lines=1 --fields-terminated-by=';' --local -uroot -proot mi
 mysqlimport --ignore-lines=1 --fields-terminated-by=';' --local -uroot -proot migrazioni  $FILENAME_LISTAFINALE
 mysqlimport --ignore-lines=1 --fields-terminated-by=';' --local -uroot -proot migrazioni  $FILENAME_2016
 mysqlimport --ignore-lines=1 --fields-terminated-by=';' --local -uroot -proot migrazioni  $FILENAME_BUTTARE
+mysqlimport --ignore-lines=1 --fields-terminated-by=';' --local -uroot -proot migrazioni  $FILENAME_SERVERLIST
 
 mysqlimport --ignore-lines=1 --fields-terminated-by=',' --local -uroot -proot migrazioni  $FILENAME_FIRE
 mysqlimport --ignore-lines=1 --fields-terminated-by=',' --local -uroot -proot migrazioni  $FILENAME_FEMSWS
@@ -430,7 +432,7 @@ mysqlimport --ignore-lines=1 --fields-terminated-by=',' --local -uroot -proot mi
 mysqlimport --ignore-lines=1 --fields-terminated-by=',' --local -uroot -proot migrazioni  $FILENAME_TANGEASSRV
 mysqlimport --ignore-lines=1 --fields-terminated-by=',' --local -uroot -proot migrazioni  $FILENAME_TANGEASINFO
 mysqlimport --ignore-lines=1 --fields-terminated-by=',' --local -uroot -proot migrazioni  $FILENAME_TANGFEMS
-mysqlimport --ignore-lines=1 --fields-terminated-by=';' --local -uroot -proot migrazioni  $FILENAME_SERVERLIST
+
 
 #LOAD DATA INFILE
 #mysql --defaults-extra-file=$CFG_FILE -u root  migrazioni -e "select * from $TABLENAME_BUTTARE";

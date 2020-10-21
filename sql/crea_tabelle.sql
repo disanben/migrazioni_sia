@@ -407,9 +407,10 @@ CREATE TABLE `Serverlist` (
 `FONTS_OpenType_SysWOW64`   VARCHAR(15),
 `Tcpip_V6_Disabled`         VARCHAR(15),
 `Ip_Address`                VARCHAR(15),
-`ActiveMQ`                  VARCHAR(25));
+`ActiveMQ`                  VARCHAR(25),
+`DataCre`                   VARCHAR(10));
 
-ALTER TABLE `Serverlist` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`)
+ALTER TABLE `Serverlist` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
 
 
 

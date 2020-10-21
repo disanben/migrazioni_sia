@@ -1,0 +1,114 @@
+----------------------------------------------------------------------------------------------------
+per verificare lo stato
+
+sudo systemctl  start mysqld
+
+----------------------------------------------------------------------------------------------------
+
+Per creare la tabella:
+mysql -u root -p migrazioni < sql/crea_tabelle.sql
+
+Per importare il file:
+mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u root -p migrazioni Yang_FemsWS.csv
+
+Per fare le query:
+mysql -u root -p migrazioni -e "select * from Yang_FemsWS"
+
+
+------------------------------------------------------------------------------------------------------
+
+
+Per creare la tabella:
+mysql -u root -p migrazioni < sql/creatabella_elencoserver_feng_lista_finale.sql
+
+Per importare il file:
+mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u root -p  migrazioni elencoserver_feng_listafinale.csv
+
+Per fare le query:
+mysql -u root -p migrazioni -e "select * from Elencoserver_Feng_Listafinale"
+
+-----------------------------------------------------------------------------------------------------
+
+Per creare la tabella:
+mysql -u root -p migrazioni < sql/creatabella_elencoserver_feng_2016.sql
+
+Per verificare la creazione della tabella
+mysql -u root -p migrazioni -e "show tables"
+
+Per importare il file:
+mysqlimport --ignore-lines=1 --fields-terminated-by=, --local -u root -p  migrazioni Elencoserver_Feng_2016.csv
+
+Per fare le query:
+mysql -u root -p migrazioni -e "select * from Elencoserver_Feng_2016"
+
+
+-----------------------------------------------------------------------------------------------------
+Crea file elencoserver_feng_listafinale.csv con le giuste intestazioni
+tail -n +2 [Nome File] > elencoserver_feng_listafinale.csv
+cat sql/table_header | head -n 3 | tail -n 4 >> elencoserver_feng_listafinale.csv
+
+Crea file elencoserver_feng_2016.csv con le giuste intestazioni
+tail -n +2 [Nome File] > elencoserver_feng_2016.csv
+cat sql/table_header | head -n 5 | tail -n 2 >> elencoserver_feng_2016.csv
+
+Crea file Yang_FemsWS.csv con le giuste intestazioni
+tail -n +2 [Nome File] > Yang_FemsWS.csv
+cat sql/table_header | head -n 7 | tail -n 1 >> Yang_FemsWS.csv
+
+
+-----------------------------------------------------------------------------------------------------
+Interrogazioni con passord in file
+mysql --defaults-extra-file=root.cfg -u root  migrazioni -e "show databases";
+
+
+-----------------------------------------------------------------------------------------------------
+Query interessanti
+-----------------------------------------------------------------------------------------------------
+011: descrizione della tabella ListaFinale
+     mysql -u root -proot migrazioni -e "show tables"
+     mysql -u root -proot migrazioni -e "describe Elencoserver_Feng_2016"
+     mysql -u root -proot migrazioni -e "describe Da_Buttare"
+     mysql -u root -proot migrazioni -e "describe Yang_FemsWS"
+
+
+101: ricerca di tutti FemsWS da Elenco_Server_Listafinale [FEMSWS]
+     mysql -u root -proot migrazioni -e "select DataCre from Elencoserver_Feng_Listafinale where 'FemsId_Fire' LIKE '%FEM%'"
+
+102: Macchine presenti nelle due tabelle
+     mysql -u root -proot migrazioni -e "select distinct ServerPartenza, macchina from Elencoserver_Feng_Listafinale left join Elencoserver_Feng_2016 on Elencoserver_Feng_Listafinale.ServerPartenza = Elencoserver_Feng_2016.macchina"
+
+103: Istanze di tipo FemsWS migrate e situazione macchina da buttare
+     mysql -u root -proot migrazioni -e "select count(ServerPartenza), ServerPartenza from Elencoserver_Feng_Listafinale where StatoIstanze like '%butta%' group by ServerPartenza"
+
+
+104: Macchine presenti nella lista finale e da_buttare
+     mysql -u root -proot migrazioni -e "select distinct ServerPartenza, daButtare from Elencoserver_Feng_Listafinale left join Da_Buttare on Elencoserver_Feng_Listafinale.ServerPartenza = Da_Buttare.daButtare"
+
+105: lista delle istanze fatte per server di partenza
+     mysql -u root -proot migrazioni -e "select ServerPartenza, FemsId_Fire, TipoFems2, ServerArrivo, StatoIstanze from Elencoserver_Feng_Listafinale where StatoIstanze like '%butta%' order by ServerPartenza"
+
+106: lista delle istanze fatte per server di arrivo
+     mysql -u root -proot migrazioni -e "select ServerPartenza, FemsId_Fire, TipoFems2, ServerArrivo, StatoIstanze from Elencoserver_Feng_Listafinale where StatoIstanze like '%butta%' order by ServerArrivo"
+
+--------------------------------------------------------
+convertire il file di aggiornamento di GET-ADComputer
+cat out | sed '3d' | sed 's/,/;/g' | sed 's/ /,/1' | sed 's/ /,/1' | sed 's/ //g' > Anag_Srv.csv
+
+--------------------------------------------------------
+
+###################################################
+  Come Aggiungere una nuova fonte di dati
+###################################################
+1. Esportare il formato CSV della nuova fonte di dati con la intestazione dei campi
+2. Dalla intestazione dei campi del nuovo file csv aggiungere una nuova voce al file Table_Header in fondo con la voce commento sopra.
+3. Nel file crea_tabelle.sql creare la nuova tabella (dati dei campi in formato stringa)
+4. Nel file loadDatabase.sh aggiungere la nuova entry nei punti:
+     IN_FILENAME_
+     TABLENAME_
+     FILENAME_
+     DATAFILE_
+     Aggiungere alla verifica della presenza del file
+     Aggiungere alla procedura di recupero della data del file
+     Aggiungere alla procedura di inserimento data nel file .tmp
+     Aggiungere alla procedura di aggiunta database
+     Aggiungere alla procedura mysqlimport

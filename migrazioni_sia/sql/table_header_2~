@@ -1,0 +1,12 @@
+#Header delle tabelle
+#Tabella Elencoserver_Feng_Listafinale (riga 3)
+Sito;ServerPartenza;SitoArrivo;ServerArrivo;StatoIstanze;Flag2;FemsId_Fire;Colonna1;Colonna12;TipoFems2;EasId2;EpUtilizzato;Role2;EpUtilizzato3;Performance;Vers;IP;Colonna22;Note;Col23;Col24;Col25;Col26;Col27;DataCre
+#Tabella Elencoserver_Feng_2016 (riga 5)
+Macchina;TipoMacchina;SpostareIn;Istanze;TipoIstanza;EasId;Ruolo;Performance;Versione;IP;SO;Note;DataCre
+#Tabella Yang_FemsWS (riga 7)
+LSiteId;LSiteName;FemsWsId;FemsWsLabel;UniqueNo;Enabled;Server_Kind;ServerId;PNodeId;CNodeId;NetPort;Involved;Life_Cycle_State;Admin_State;DataCre
+#Tabella da_buttare (riga 9)
+daButtare;IP_Address;FV;Note;Eliminata;DataCre
+#Tabella Anag_Srv (riga 11)
+Name;IP_Address;ObjectCat;DataCre
+

@@ -1,0 +1,399 @@
+#-- ------------------------------------------------
+#--  file sql per creazione delle tabelle
+#-- ------------------------------------------------
+
+USE migrazioni
+
+###############################################################
+##   TABELLE ESTERNE
+###############################################################
+#-------------------------------
+#--    Table ANAG_SRV
+#-------------------------------
+DROP TABLE IF EXISTS `Anag_Srv`;
+
+CREATE TABLE `Anag_Srv` (
+`Name` VARCHAR(15),
+`IP_Address` VARCHAR(15),
+`ObjectCat` VARCHAR(50),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Anag_Srv` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+#-- --------------------------------------
+#--    Elencoserver_Feng_Listafinale
+#-- --------------------------------------
+DROP TABLE IF EXISTS `Elencoserver_Feng_Listafinale`;
+
+CREATE TABLE `Elencoserver_Feng_Listafinale` ( 
+`Sito` VARCHAR(15),
+`ServerPartenza` VARCHAR(15),
+`SitoArrivo` VARCHAR(15),
+`ServerArrivo` VARCHAR(15),
+`StatoIstanze` VARCHAR(30),
+`Flag2` VARCHAR(15),
+`FemsId_Fire` VARCHAR(15),
+`Colonna1` VARCHAR(15),
+`Colonna12` VARCHAR(15),
+`TipoFems2` VARCHAR(15),
+`EasId2` VARCHAR(15),
+`EpUtilizzato` VARCHAR(15),
+`Role2` VARCHAR(15),
+`EpUtilizzato3` VARCHAR(15),
+`Performance` VARCHAR(15),
+`Vers` VARCHAR(15),
+`IP` VARCHAR(30),
+`Colonna22` VARCHAR(15), 
+`Note` VARCHAR(30),
+`Col23` VARCHAR(5), 
+`Col24` VARCHAR(5), 
+`Col25` VARCHAR(5), 
+`Col26` VARCHAR(5), 
+`Col27` VARCHAR(5), 
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Elencoserver_Feng_Listafinale` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+#-------------------------------
+#--    Elencoserver_Feng_2016
+#-------------------------------
+DROP TABLE IF EXISTS `Elencoserver_Feng_2016`;
+
+CREATE TABLE `Elencoserver_Feng_2016` (
+`Macchina` VARCHAR(15),
+`TipoMacchina` VARCHAR(15),
+`SpostareIn` VARCHAR(15),
+`Istanze` VARCHAR(15),
+`TipoIstanza` VARCHAR(15),
+`EasId` VARCHAR(15),
+`Ruolo` VARCHAR(15),
+`Performance` VARCHAR(15),
+`Versione` VARCHAR(25),
+`ip` VARCHAR(15),
+`SO` VARCHAR(15),
+`Note` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Elencoserver_Feng_2016` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+#-------------------------------
+#--    Da_Buttare
+#-------------------------------
+DROP TABLE IF EXISTS `Da_Buttare`;
+
+CREATE TABLE `Da_Buttare` (
+`daButtare` VARCHAR(15),
+`IP_Address` VARCHAR(15),
+`FV` VARCHAR(15),
+`Note` VARCHAR(30),
+`Eliminata` VARCHAR(8),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Da_Buttare` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+########################################################
+#-------------------------------
+#--    Table Fire
+#-------------------------------
+DROP TABLE IF EXISTS `Fire`;
+
+CREATE TABLE `Fire` (
+`LSiteId` VARCHAR(15),
+`LSiteName` VARCHAR(15),
+`FireLabel` VARCHAR(15),
+`FireId` VARCHAR(15),
+`Enabled` VARCHAR(15),
+`ServerKind` VARCHAR(15),
+`ServerId` VARCHAR(15),
+`PNodeId` VARCHAR(15),
+`NetPort` VARCHAR(15),
+`Involved` VARCHAR(15),
+`LifeCycleState` VARCHAR(15),
+`AdminState` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Fire` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+#-------------------------------
+#--    Table FemsWS
+#-------------------------------
+DROP TABLE IF EXISTS `FemsWS`;
+
+CREATE TABLE `FemsWS` (
+`LSiteId` INT,
+`LSiteName` VARCHAR(15),
+`FemsWsId` VARCHAR(15),
+`FemsWsLabel` VARCHAR(15),
+`UniqueNo` INT,
+`Enabled` CHAR,
+`Server_Kind` VARCHAR(15),
+`ServerId` VARCHAR(15),
+`PNodeId` VARCHAR(15),
+`CNodeId` VARCHAR(15),
+`NetPort` INT,
+`Involved` INT,
+`LifeCycleState` VARCHAR(15),
+`AdminState` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `FemsWS` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+
+
+#-------------------------------
+#--    Table Fire_Ice_Top
+#-------------------------------
+DROP TABLE IF EXISTS `Fire_Ice_Top`;
+
+CREATE TABLE `Fire_Ice_Top` (
+`LogicalSite` VARCHAR(15),
+`Eas_Id` VARCHAR(15),
+`Implementation` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Fire_Ice_Top` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+
+#-------------------------------
+#--    Table Fire_Spec
+#-------------------------------
+DROP TABLE IF EXISTS `Fire_Spec`;
+
+CREATE TABLE `Fire_Spec` (
+`Abi_snd` VARCHAR(15),
+`Abi_rcv` VARCHAR(15),
+`ApplCode` VARCHAR(15),
+`Env` VARCHAR(15),
+`Srv` VARCHAR(15),
+`LSiteId_snd` VARCHAR(15),
+`FL_EasId_snd` VARCHAR(15),
+`FL_EasName_snd` VARCHAR(15),
+`PoolId_snd` VARCHAR(15),
+`LSiteId_rcv` VARCHAR(15),
+`FL_EasId_rcv` VARCHAR(15),
+`FL_EasName_rcv` VARCHAR(15),
+`PoolId_rcv` VARCHAR(15),
+`ChgMgmt_Id` VARCHAR(15),
+`State` VARCHAR(15),
+`Transition_Date` VARCHAR(15),
+`FL_EasId_reloc` VARCHAR(15),
+`Reloc_note` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Fire_Spec` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+
+#-------------------------------
+#--    Table FemsWS_Circuit
+#-------------------------------
+DROP TABLE IF EXISTS `FemsWS_Circuit`;
+
+CREATE TABLE `FemsWS_Circuit` (
+`Client_NetCode` VARCHAR(15),
+`Server_NetCode` VARCHAR(15),
+`ApplCode` VARCHAR(15),
+`Env` VARCHAR(15),
+`Service` VARCHAR(15),
+`Client_LSiteId` VARCHAR(15),
+`Client_LSiteName` VARCHAR(15),
+`Server_LSiteId` VARCHAR(15),
+`Server_LSiteName` VARCHAR(15),
+`Client_Pool` VARCHAR(15),
+`Server_Pool` VARCHAR(15),
+`ServiceId` VARCHAR(15),
+`WebServer` VARCHAR(15),
+`UrlPath` VARCHAR(15),
+`SoapAction` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `FemsWS_Circuit` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+#-------------------------------
+#--    Table FemsWS_Circuit_Inst
+#-------------------------------
+DROP TABLE IF EXISTS `FemsWS_Circuit_Inst`;
+
+CREATE TABLE `FemsWS_Circuit_Inst` (
+`Client_NetCode` VARCHAR(15),
+`Server_NetCode` VARCHAR(15),
+`ApplCode` VARCHAR(15),
+`Env` VARCHAR(15),
+`Service` VARCHAR(15),
+`Client_LSiteId` VARCHAR(15),
+`Client_LSiteName` VARCHAR(15),
+`Server_LSiteId` VARCHAR(15),
+`Server_LSiteName` VARCHAR(15),
+`Client_Pool` VARCHAR(15),
+`Client_FemsWs` VARCHAR(15),
+`Client_Host` VARCHAR(15),
+`Server_Pool` VARCHAR(15),
+`Server_FemsWs` VARCHAR(15),
+`Server_Host` VARCHAR(15),
+`Service_Id` VARCHAR(15),
+`WebServer` VARCHAR(15),
+`UrlPath` VARCHAR(15),
+`SoapAction` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `FemsWS_Circuit_Inst` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+
+#-------------------------------
+#--    Table Fire_MQ_Prof
+#-------------------------------
+DROP TABLE IF EXISTS `Fire_MQ_Prof`;
+
+CREATE TABLE `Fire_MQ_Prof` (
+`FleasId` VARCHAR(15),
+`FireId` VARCHAR(15),
+`ServerId` VARCHAR(15),
+`ProfileId` VARCHAR(15),
+`ProfileType` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Fire_MQ_Prof` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+
+#-------------------------------
+#--    Table Tangram_Fas
+#-------------------------------
+DROP TABLE IF EXISTS `Tangram_Fas`;
+
+CREATE TABLE `Tangram_Fas` (
+`LogicalSite` VARCHAR(15),
+`Fas` VARCHAR(15),
+`Involvement` VARCHAR(15),
+`LifeCycleState` VARCHAR(15),
+`AdministrativeState` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Tangram_Fas` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+
+
+#-------------------------------
+#--    Table Tangram_Eas
+#-------------------------------
+DROP TABLE IF EXISTS `Tangram_Eas`;
+
+CREATE TABLE `Tangram_Eas` (
+`LogicalSite` VARCHAR(15),
+`EasId` VARCHAR(15),
+`Implementation` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Tangram_Eas` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+#-------------------------------
+#--    Table Tangram_Eas_Srv
+#-------------------------------
+DROP TABLE IF EXISTS `Tangram_Eas_Srv`;
+
+CREATE TABLE `Tangram_Eas_Srv` (
+`LSiteId` VARCHAR(15),
+`LSiteName` VARCHAR(15),
+`SSGroupId` VARCHAR(15),
+`EasId` VARCHAR(15),
+`LU` VARCHAR(15),
+`Implementation` VARCHAR(15),
+`FemsId` VARCHAR(15),
+`ServerId` VARCHAR(15),
+`EasCapability` VARCHAR(15),
+`ServerCapability` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Tangram_Eas_Srv` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+
+#-------------------------------
+#--    Table Tangram_Eas_Info
+#-------------------------------
+DROP TABLE IF EXISTS `Tangram_Eas_Srv`;
+
+CREATE TABLE `Tangram_Eas_Info` (
+`Eas` VARCHAR(15),
+`LSiteId` VARCHAR(15),
+`LSite` VARCHAR(15),
+`CICSId` VARCHAR(15),
+`Charset` VARCHAR(15),
+`Endiannes` VARCHAR(15),
+`Impl` VARCHAR(15),
+`TestProd` VARCHAR(15),
+`MQprefix` VARCHAR(15),
+`sync` VARCHAR(15),
+`e2eext` VARCHAR(15),
+`zlib` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Tangram_Eas_Info` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+#-------------------------------
+#--    Table Tangram_Fems
+#-------------------------------
+DROP TABLE IF EXISTS `Tangram_Fems`;
+
+CREATE TABLE `Tangram_Fems` (
+`LogicalSite` VARCHAR(15),
+`Fems` VARCHAR(15),
+`Type` VARCHAR(15),
+`PhysicalSite` VARCHAR(15),
+`PNodeId` VARCHAR(15),
+`CNodeId` VARCHAR(15),
+`Involvement` VARCHAR(15),
+`LifeCycleState` VARCHAR(15),
+`AdministrativeState` VARCHAR(15),
+`DataCre` VARCHAR(10));
+
+ALTER TABLE `Tangram_Fems` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+
+
+
+
+###############################################################
+##   TABELLE INTERNE
+###############################################################
+#-- --------------------------------------
+#--    Check_Istanze
+#-- --------------------------------------
+DROP TABLE IF EXISTS `Check_Istanze`;
+
+CREATE TABLE `Check_Istanze` (
+`Istanza` VARCHAR(15),
+`Tipo` VARCHAR(15),
+`Server` VARCHAR(15),
+`Note` VARCHAR(100),
+`DataCheck` VARCHAR(25),
+`Firma` VARCHAR(10));
+
+ALTER TABLE `Check_Istanze` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+#-- --------------------------------------
+#--    Note_Server
+#-- --------------------------------------
+DROP TABLE IF EXISTS `Note_Server`;
+
+CREATE TABLE `Note_Server` (
+`Server` VARCHAR(15),
+`Note` VARCHAR(100),
+`Data` VARCHAR(25));
+
+ALTER TABLE `Note_Server` ADD `id` INT AUTO_INCREMENT NOT NULL, ADD PRIMARY KEY (`id`);
+
+
+

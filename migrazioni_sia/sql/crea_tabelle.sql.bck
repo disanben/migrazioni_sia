@@ -1,0 +1,102 @@
+;--------------------------------------------------
+;--  file sql per creazione delle tabelle
+;--------------------------------------------------
+
+USE migrazioni;
+
+----------------------------------------
+--    Elencoserver_Feng_Listafinale
+----------------------------------------
+DROP TABLE IF EXISTS `Elencoserver_Feng_Listafinale`; 
+
+CREATE TABLE `Elencoserver_Feng_Listafinale` ( 
+`Sito` VARCHAR(15),
+`ServerPartenza` VARCHAR(15),
+`SitoArrivo` VARCHAR(15),
+`ServerArrivo` VARCHAR(15),
+`StatoIstanze` VARCHAR(30),
+`Flag2` VARCHAR(15),
+`FemsId_Fire` VARCHAR(15),
+`Colonna1` VARCHAR(15),
+`Colonna12` VARCHAR(15),
+`TipoFems2` VARCHAR(15),
+`EasId2` VARCHAR(15),
+`EpUtilizzato` VARCHAR(15),
+`Role2` VARCHAR(15),
+`EpUtilizzato3` VARCHAR(15),
+`Performance` VARCHAR(15),
+`Vers` VARCHAR(15),
+`IP` VARCHAR(30),
+`Colonna22` VARCHAR(15), 
+`Note` VARCHAR(30));
+
+ALTER TABLE `Elencoserver_Feng_Listafinale` 
+ADD `id` INT AUTO_INCREMENT NOT NULL,
+ADD PRIMARY KEY (`id`)
+
+
+
+
+-------------------------------
+--    Elencoserver_Feng_2016
+-------------------------------
+DROP TABLE IF EXISTS `Elencoserver_Feng_2016`; 
+
+CREATE TABLE `Elencoserver_Feng_2016` (
+`Macchina` VARCHAR(15),
+`TipoMacchina` VARCHAR(15),
+`SpostareIn` VARCHAR(15),
+`Istanze` VARCHAR(15),
+`TipoIstanza` VARCHAR(15),
+`EasId` VARCHAR(15),
+`Ruolo` VARCHAR(15),
+`Performance` VARCHAR(15),
+`Versione` VARCHAR(25),
+`ip` VARCHAR(15),
+`SO` VARCHAR(15),
+`Note` VARCHAR(15));
+
+ALTER TABLE `Elencoserver_Feng_2016` 
+ADD `id` INT AUTO_INCREMENT NOT NULL,
+ADD PRIMARY KEY (`id`)
+
+
+-------------------------------
+--    Da_Buttare
+-------------------------------
+DROP TABLE IF EXISTS `Da_Buttare`; 
+
+CREATE TABLE `Da_Buttare` (
+`daButtare` VARCHAR(15),
+`Note` VARCHAR(30),
+`Buttata` VARCHAR(8));
+
+ALTER TABLE `Da_Buttare` 
+ADD `id` INT AUTO_INCREMENT NOT NULL,
+ADD PRIMARY KEY (`id`)
+
+
+-------------------------------
+--    Table Yang_FemsWS
+-------------------------------
+DROP TABLE IF EXISTS `Yang_FemsWS`; 
+
+CREATE TABLE `Yang_FemsWS` (
+`LSiteId` INT,
+`LSiteName` VARCHAR(15),
+`FemsWsId` VARCHAR(15),
+`FemsWsLabel` VARCHAR(15),
+`UniqueNo` INT,
+`Enabled` CHAR,
+`Server_Kind` VARCHAR(15),
+`ServerId` VARCHAR(15),
+`PNodeId` VARCHAR(15),
+`CNodeId` VARCHAR(15),
+`NetPort` INT,
+`Involved` INT,
+`Life_Cycle_State` VARCHAR(15),
+`Admin_State` VARCHAR(15));
+
+ALTER TABLE `Yang_FemsWS` 
+ADD `id` INT AUTO_INCREMENT NOT NULL,
+ADD PRIMARY KEY (`id`);

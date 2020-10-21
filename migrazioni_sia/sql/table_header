@@ -1,0 +1,35 @@
+#Header delle tabelle
+#Tabella Elencoserver_Feng_Listafinale da file excel Windows (riga 3)
+Sito;ServerPartenza;SitoArrivo;ServerArrivo;StatoIstanze;Flag2;FemsId_Fire;Colonna1;Colonna12;TipoFems2;EasId2;EpUtilizzato;Role2;EpUtilizzato3;Performance;Vers;IP;Colonna22;Note;DataCre
+#Tabella Elencoserver_Feng_2016  da file excel Windows (riga 5)
+Macchina;TipoMacchina;SpostareIn;Istanze;TipoIstanza;EasId;Ruolo;Performance;Versione;IP;SO;Note;DataCre
+#Tabella Da_Buttare da file excel Windows (riga 7)
+daButtare;IP_Address;FV;Note;Eliminata;DataCre
+#Tabella Anag_Srv   da file excel Windows (riga 9)
+Name;IP_Address;ObjectCat;DataCre
+#Tabella Fire (riga 11)
+LSiteId,LSiteName,FireLabel,FireId,Enabled,ServerKind,ServerId,PNodeId,NetPort,Involved,LifeCycleState,AdminState,DataCre
+#Tabella FemsWS (riga 13)
+LSiteId,LSiteName,FemsWsId,FemsWsLabel,UniqueNo,Enabled,Server_Kind,ServerId,PNodeId,CNodeId,NetPort,Involved,LifeCycleState,AdminState,DataCre
+#Tabella Ice_Top (riga 15)
+LogicalSite,Eas_Id,Implementation,DataCre
+#Tabella Fire_Spec (riga 17)
+Abi_snd,Abi_rcv,ApplCode,Env,Srv,LSiteId_snd,FL_EasId_snd,FL_EasName_snd,PoolId_snd,LSiteId_rcv,FL_EasId_rcv,FL_EasName_rcv,PoolId_rcv,ChgMgmt_Id,State,Transition_Date,FL_EasId_reloc,Reloc_note,DataCre
+#Tabella FireWS_Circ (riga 19)
+Client_NetCode,Server_NetCode,ApplCode,Env,Service,Client_LSiteId,Client_LSiteName,Server_LSiteId,Server_LSiteName,Client_Pool,Server_Pool,ServiceId,WebServer,UrlPath,SoapAction,DataCre
+#Tabella FireWS_Circ_Inst (riga 21)
+Client_NetCode,Server_NetCode,ApplCode,Env,Service,Client_LSiteId,Client_LSiteName,Server_LSiteId,Server_LSiteName,Client_Pool,Client_FemsWs,Client_Host,Server_Pool,Server_FemsWs,Server_Host,Service_Id,WebServer,UrlPath,SoapAction,DataCre
+#Tabella Fire_MQ (riga 23)
+FleasId,FireId,ServerId,ProfileId,ProfileType,DataCre
+#Tabella Tangram_Fas (riga 25)
+LogicalSite,Fas,Involvement,LifeCycleState,AdministrativeState,DataCre
+#Tabella Tangram_Eas (riga 27)
+LogicalSite,EasId,Implementation,DataCre
+#Tabella Tangram_Eas_Srv (riga 29)
+LSiteId,LSiteName,SSGroupId,EasId,LU,Implementation,FemsId,ServerId,EasCapability,ServerCapability,DataCre
+#Tabella Tangram_Eas_Info (riga 31)
+Eas,LSiteId,LSite,CICSId,Charset,Endiannes,Impl,TestProd,MQprefix,sync,e2eext,zlib,DataCre
+#Tabella Tangram_Fems (riga 33)
+LogicalSite,Fems,Type,PhysicalSite,PNodeId,CNodeId,Involvement,LifeCycleState,AdministrativeState,DataCre
+#Pizzotool (riga 35)
+Server;OS;Model;RIRIDEC_V;IBM_MQ_V_64;HP_PSP_V;MSMQ_Wait_time;MSMQ_MachQuot;MSMQ_EveryoneSend;IBM_MQ_V_32;Cluster_Service;MSMQ_Depend;SQL_Dependences;MSMQ_Hot_Fix;MSDTC_Hot_Fix;FEMS_V;TCPIP_V;w32tm_MaxPollInterval_Member;w32tm_MinPollInterval_Member;w32tm_PollAdjustFactor_Member;DNS_Server;RPC_ports;DNS_Hot_Fix;Attacco_Porta_UDP_Chiusa;SQL_SP3_Single_Serv;SQL_SP3_Nodi_Cluster;Patch_Semaphore;Patch_P2000;MSMQ_LongLiveTime;Manifest_V;Patch_Time_Wait;Backup_System_State;Numero_CPU_Core_Type;RAM;Deep_Security_V;Patch_Kerberos;PostgreSQL_check_version;FONTS_OpenType_System32;FONTS_OpenType_SysWOW64;Tcpip_V6_Disabled; Ip_Address; ActiveMQ; DataCre

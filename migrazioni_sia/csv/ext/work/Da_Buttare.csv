@@ -1,0 +1,39 @@
+daButtare;IP_Address;FV;Note;Eliminata;DataCre
+CSITOA200822;10.201.158.112;F;cluster;; 22-set
+CSITOB200814;10.200.99.102;F;cluster;; 22-set
+CSITOG200803;10.6.37.124;F;cluster;; 22-set
+GSITOD200803;10.201.159.111;F;;Y; 22-set
+GSITOF200801;10.203.252.120;F;;Y; 22-set
+GSITOG200801;10.6.37.132;F;;Y; 22-set
+GSITOG200802;10.6.37.133;F;;Y; 22-set
+HSITOG200804;10.6.37.125;F;cluster virtuale;Y; 22-set
+HSITOG200805;10.6.37.126;F;cluster virtuale;Y; 22-set
+KSITOA200804;;;;Y; 22-set
+KSITOB200802;;;;Y; 22-set
+KSITOB200816;;;;; 22-set
+KSITOC200806;;;;Y; 22-set
+KSITOF200801;;;;Y; 22-set
+KSITOF200802;;;;; 22-set
+KSITOG200807;;;;Y; 22-set
+KSITOG200808;;;;Y; 22-set
+NSITOA200820;;;nodo;; 22-set
+NSITOA200821;;;nodo;; 22-set
+NSITOB200812;;;nodo;; 22-set
+NSITOB200813;;;nodo;; 22-set
+NSITOG200801;;;nodo;; 22-set
+NSITOG200802;;;nodo;; 22-set
+NSITOG200815;;;nodo senza virtuali;; 22-set
+NSITOG200816;;;nodo senza virtuali;; 22-set
+PCP_HTTP_3;;;;; 22-set
+USITOA200823;;;cluster virtuale;Y; 22-set
+USITOA200824;;;cluster virtuale;Y; 22-set
+USITOB200815;;;cluster virtuale;Y; 22-set
+USITOB200816;;;cluster virtuale;Y; 22-set
+USITOB200833-BI;;;non so a quale nodo fisico Š associato;; 22-set
+XMSPRILAB08;;;;; 22-set
+ZSITOA200802;;;;; 22-set
+ZSITOA200806;;;;; 22-set
+ZSITOA200852;;;;; 22-set
+ZSITOD200802;;;;; 22-set
+ZSITOG200803;;;;; 22-set
+ZSITOLLABB01;;;;; 22-set

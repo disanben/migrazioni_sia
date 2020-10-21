@@ -27,6 +27,7 @@ getSqlCommand () {
    NOT="$5"
    IPA="$6"
    STATO="$7"
+   EAS="$8"
 
    #echo "ricerca stringa per cod: ${CODE}"
 
@@ -237,14 +238,14 @@ getSqlCommand () {
 # 0101: ricerca libera di tutto da Elenco_Server_Listafinale
 cod_0100(){
   #echo "0100: ricerca libera di tutto da Elenco_Server_Listafinale per tipo, istanza e server partenza"
-  SQLSTRING="select ServerPartenza, FemsId_Fire, ServerArrivo, TipoFems2, StatoIstanze, DataCre from Elencoserver_Feng_Listafinale where TipoFems2 LIKE '%${TIP}%' and FemsId_Fire LIKE '%${IST}%' and ServerPartenza LIKE '%${SRV}%'"
+  SQLSTRING="select ServerPartenza, FemsId_Fire, ServerArrivo, TipoFems2, EasId2, Flag2, StatoIstanze, DataCre from Elencoserver_Feng_Listafinale where TipoFems2 LIKE '%${TIP}%' and FemsId_Fire LIKE '%${IST}%' and ServerPartenza LIKE '%${SRV}%' and EasId2 LIKE '%${EAS}%'"
   echo "${SQLSTRING}"
 }
 
 # 0101: ricerca libera di tutto da Elenco_Server_Listafinale
 cod_0101(){
   #echo "0101: ricerca libera di tutto da Elenco_Server_Listafinale per tipo, istanza e server arrivo"
-  SQLSTRING="select ServerPartenza, FemsId_Fire, ServerArrivo, TipoFems2, StatoIstanze, DataCre from Elencoserver_Feng_Listafinale where TipoFems2 LIKE '%${TIP}%' and FemsId_Fire LIKE '%${IST}%' and ServerArrivo LIKE '%${SRV}%'"
+  SQLSTRING="select ServerPartenza, FemsId_Fire, ServerArrivo, TipoFems2, EasId2, Flag2, StatoIstanze, DataCre from Elencoserver_Feng_Listafinale where TipoFems2 LIKE '%${TIP}%' and FemsId_Fire LIKE '%${IST}%' and ServerArrivo LIKE '%${SRV}%' and EasId2 LIKE '%${EAS}%'"
   echo "${SQLSTRING}"
 }
 
@@ -467,9 +468,9 @@ cod_0251(){
   #echo "0251: Situazione stato delle istanze per server partenza in lista finale"
   #SQLSTRING="select Istanza, A.ServerPartenza, A.ServerArrivo, A.TipoFems2, Stato, StatoDesc, Data from Stato_Istanza left join Elencoserver_Feng_Listafinale as A on Istanza = FemsId_Fire where TipoFems2 LIKE '%${TIP}%' and ServerPartenza LIKE '%${SRV}%' and Istanza LIKE '%${IST}%' order by Istanza asc, ServerPartenza asc"
   #SQLSTRING="select A.FemsId_Fire, A.ServerPartenza, A.ServerArrivo, A.TipoFems2, C.Stato, C.StatoDesc, B.stato, B.statoDesc from Stato_Istanza as C left join Elencoserver_Feng_Listafinale as A  on A.FemsId_Fire = C.Istanza   left join Stato_Server as B on A.ServerPartenza = B.Server where A.TipoFems2 LIKE '%${TIP}%' and A.ServerPartenza LIKE '%${SRV}%' and A.FemsId_Fire LIKE '%${IST}%' order by A.ServerPartenza asc, A.FemsId_Fire asc"
-  SQLSTRING="select A.FemsId_Fire, A.ServerPartenza, A.ServerArrivo, A.TipoFems2, C.Stato, C.StatoDesc "
+  SQLSTRING="select A.FemsId_Fire, A.ServerPartenza, A.ServerArrivo, A.TipoFems2, A.EasId2, A.Flag2, C.Stato, C.StatoDesc "
   SQLSTRING=${SQLSTRING}"from Stato_Istanza as C left join Elencoserver_Feng_Listafinale as A  on A.FemsId_Fire = C.Istanza "
-  SQLSTRING=${SQLSTRING}"where A.TipoFems2 LIKE '%${TIP}%' and A.ServerPartenza LIKE '%${SRV}%' and A.FemsId_Fire LIKE '%${IST}%' "
+  SQLSTRING=${SQLSTRING}"where A.TipoFems2 LIKE '%${TIP}%' and A.ServerPartenza LIKE '%${SRV}%' and A.FemsId_Fire LIKE '%${IST}%' and EasId2 LIKE '%${EAS}%' "
   SQLSTRING=${SQLSTRING}" order by A.ServerPartenza asc, A.FemsId_Fire asc"
 
   echo "${SQLSTRING}"
@@ -479,14 +480,14 @@ cod_0252(){
   #echo "0252: Situazione stato delle istanze in relazione a lista 2016 per server partenza"
   #SQLSTRING="select ServerPartenza, ServerArrivo, FemsId_Fire, StatoIstanze, stato, statoDesc, Data, TipoFems2, ServerArrivo from Elencoserver_Feng_Listafinale left join stato_istanza on FemsId_Fire=Istanza where TipoFems2 LIKE '%${TIP}%' and FemsId_Fire LIKE '%${IST}%' and ServerPartenza LIKE '%${SRV}%' order by Istanza asc, ServerPartenza asc"
   #SQLSTRING="select A.FemsId_Fire, A.ServerPartenza, A.ServerArrivo, A.TipoFems2, C.Stato, C.StatoDesc, B.Server, B.stato, B.statoDesc from  Elencoserver_Feng_Listafinale as A left join Stato_Istanza as C on A.FemsId_Fire = C.Istanza left join Stato_Server as B on A.ServerPartenza = B.Server where A.TipoFems2 LIKE '%${TIP}%' and A.ServerPartenza LIKE '%${SRV}%' and C.Istanza LIKE '%${IST}%' order by A.ServerPartenza asc, A.TipoFems2 asc"
-  SQLSTRING="select A.FemsId_Fire, A.ServerPartenza, A.ServerArrivo, A.TipoFems2, C.Stato as I_Stato, C.StatoDesc as I_Desc, B.stato as S_Stato , B.statoDesc as S_Desc from  Elencoserver_Feng_Listafinale as A left join Stato_Istanza as C on A.FemsId_Fire = C.Istanza left join Stato_Server as B on A.ServerPartenza = B.Server where A.TipoFems2 LIKE '%${TIP}%' and A.ServerPartenza LIKE '%${SRV}%' and A.FemsId_Fire LIKE '%${IST}%' order by A.ServerPartenza asc, A.TipoFems2 asc , A.FemsId_Fire  asc"
+  SQLSTRING="select A.FemsId_Fire, A.ServerPartenza, A.ServerArrivo, A.TipoFems2, A.EasId2, A.Flag2, C.Stato as I_Stato, C.StatoDesc as I_Desc, B.stato as S_Stato , B.statoDesc as S_Desc from  Elencoserver_Feng_Listafinale as A left join Stato_Istanza as C on A.FemsId_Fire = C.Istanza left join Stato_Server as B on A.ServerPartenza = B.Server where A.TipoFems2 LIKE '%${TIP}%' and A.ServerPartenza LIKE '%${SRV}%' and A.FemsId_Fire LIKE '%${IST}%' and EasId2 LIKE '%${EAS}%' order by A.ServerPartenza asc, A.TipoFems2 asc , A.FemsId_Fire  asc"
 
   echo "${SQLSTRING}"
 }
 
 cod_0253(){
   #echo "0251: Situazione stato delle istanze per server arrivo"
-  SQLSTRING="select A.FemsId_Fire, A.ServerPartenza, A.ServerArrivo, A.TipoFems2, Stato, StatoDesc, Data from Stato_Istanza left join Elencoserver_Feng_Listafinale as A on Istanza = FemsId_Fire where TipoFems2 LIKE '%${TIP}%' and ServerArrivo LIKE '%${SRV}%' and Istanza LIKE '%${IST}%' order by Istanza asc, ServerArrivo asc"
+  SQLSTRING="select A.FemsId_Fire, A.ServerPartenza, A.ServerArrivo, A.TipoFems2, A.EasId2, A.Flag2,Stato, StatoDesc, Data from Stato_Istanza left join Elencoserver_Feng_Listafinale as A on Istanza = FemsId_Fire where TipoFems2 LIKE '%${TIP}%' and ServerArrivo LIKE '%${SRV}%' and Istanza LIKE '%${IST}%' and EasId2 LIKE '%${EAS}%' order by Istanza asc, ServerArrivo asc"
 
   echo "${SQLSTRING}"
 }
@@ -494,7 +495,7 @@ cod_0253(){
 cod_0254(){
   #echo "0252: Situazione stato delle istanze in relazione a lista finale per server arrivo"
   #SQLSTRING="select ServerPartenza, ServerArrivo, FemsId_Fire, StatoIstanze, stato, statoDesc, Data, TipoFems2, ServerArrivo from Elencoserver_Feng_Listafinale left join stato_istanza on FemsId_Fire=Istanza where TipoFems2 LIKE '%${TIP}%' and FemsId_Fire LIKE '%${IST}%' and ServerArrivo LIKE '%${SRV}%' oder by by Istanza asc, ServerArrivo asc"
-  SQLSTRING="select A.FemsId_Fire, A.ServerPartenza, A.ServerArrivo, A.TipoFems2, C.Stato as I_Stato, C.StatoDesc as I_Desc, B.stato as S_Stato , B.statoDesc as S_Desc from  Elencoserver_Feng_Listafinale as A left join Stato_Istanza as C on A.FemsId_Fire = C.Istanza left join Stato_Server as B on A.ServerArrivo = B.Server where A.TipoFems2 LIKE '%${TIP}%' and A.ServerArrivo LIKE '%${SRV}%' and A.FemsId_Fire LIKE '%${IST}%' order by A.ServerArrivo asc, A.TipoFems2 asc , A.FemsId_Fire  asc"
+  SQLSTRING="select A.FemsId_Fire, A.ServerPartenza, A.ServerArrivo, A.TipoFems2, A.EasId2, A.Flag2, C.Stato as I_Stato, C.StatoDesc as I_Desc, B.stato as S_Stato , B.statoDesc as S_Desc from  Elencoserver_Feng_Listafinale as A left join Stato_Istanza as C on A.FemsId_Fire = C.Istanza left join Stato_Server as B on A.ServerArrivo = B.Server where A.TipoFems2 LIKE '%${TIP}%' and A.ServerArrivo LIKE '%${SRV}%' and A.FemsId_Fire LIKE '%${IST}%' and EasId2 LIKE '%${EAS}%' order by A.ServerArrivo asc, A.TipoFems2 asc , A.FemsId_Fire  asc"
 
   echo "${SQLSTRING}"
 }

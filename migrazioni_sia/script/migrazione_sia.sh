@@ -51,6 +51,7 @@ TIPO_IST="%"
 NOTE="%"
 IPA="%"
 FASE_SRV="%"
+EAS="%"
 
 PASS=( $SERVER $ISTANZA $TIPO_IST $NOTE )
 
@@ -113,8 +114,9 @@ printUsage () {
    echo "                    5. CICSMQ"
    echo "                    6. JAVAMQT2S"
    echo "                    7. JAVAMQT2SG"
-   echo " -N [NOTA]: Consente di passare delle note"
-   echo " -F [FASE]: I valori permessi sono: 00 Nuovo da Creare."
+   echo " -E [EAS ID] : Consente di passare ll valore del EAS di riferimento"
+   echo " -N [NOTA]   : Consente di passare delle note"
+   echo " -F [FASE]   : I valori permessi sono: 00 Nuovo da Creare."
    echo "                                    01 Nuovo - w2016 PASSED."
    echo "                                    02 Nuovo - FENG PASSED."
    echo "                                    03 Non Raggiungibile da Migrare."
@@ -267,7 +269,7 @@ PAR="$@"
 
 
 
-while getopts "acnd:f:hiHl:sA:F:S:I:T:N:UBEW" arg; do
+while getopts "acnd:f:hiHl:sA:E:F:S:I:T:N:UBEW" arg; do
   case $arg in
     H)
       HTML=1
@@ -326,7 +328,7 @@ while getopts "acnd:f:hiHl:sA:F:S:I:T:N:UBEW" arg; do
          printList
       else
         queryCommon
-        SQLCOMMAND=$( getSqlCommand $OPT $SERVER $ISTANZA $TIPO_IST $NOTE $IPA $FASE_SRV)
+        SQLCOMMAND=$( getSqlCommand $OPT $SERVER $ISTANZA $TIPO_IST $NOTE $IPA $FASE_SRV $EAS)
         echo "-----> Query inviata:"
         echo ${SQLCOMMAND}
         QUERY_TO_SEND="${QUERY_TO_SEND}\"${SQLCOMMAND}\""
@@ -484,10 +486,15 @@ while getopts "acnd:f:hiHl:sA:F:S:I:T:N:UBEW" arg; do
       esac
       #break
       ;;
-    I)
-      ISTANZA="$OPTARG"
-      echo "Inserimento Istanza: ${ISTANZA}"
+    E)
+      EAS="$OPTARG"
+      echo "Inserimento Eas Id: ${EAS}"
       #break
+      ;;
+    I)
+        ISTANZA="$OPTARG"
+        echo "Inserimento Istanza: ${ISTANZA}"
+        #break
       ;;
     N)
       NOTA="$OPTARG"

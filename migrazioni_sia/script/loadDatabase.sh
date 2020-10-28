@@ -6,6 +6,7 @@
 #     B.d.S - 27 Ago 2020
 #
 #   01. 2020-08-28 - Gestione campo data di ultima modifica del file
+#   01. 2020-10-28 - Riverifica procedure
 #
 
 # Note

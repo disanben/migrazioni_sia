@@ -180,6 +180,7 @@ printList () {
    echo "0305: Ricerca Istanze con Stato da listafinale"
    echo "0306: Ricerca Istanze con Stato da 2016"
    echo "0350: Ricerca Server con Stato dato dalla tabella stato_server"
+   echo "0360: Ricerca per FIREMQ su tabella Tangram_Eas_Srv (Tangram) "
    echo "------------------------------------------------------------------------------------------"
    echo ""
    echo ""

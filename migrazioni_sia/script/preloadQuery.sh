@@ -230,6 +230,12 @@ getSqlCommand () {
           #echo "SQL passed: ${SQL}"
           exit
           ;;
+      0360)
+          cod_0360
+          SQL="$( cod_0360 )"
+          #echo "SQL passed: ${SQL}"
+          exit
+          ;;
    esac
 
    return ${SQL}
@@ -561,6 +567,13 @@ cod_0350(){
 }
 
 
+cod_0360(){
+  #echo "0305: Ricerca Server con Stato dato dalla tabella stato_server"
+  SQLSTRING="select LSiteId, LSiteName, EasId, ssgroupid, femsid, serverid from Tangram_Eas_srv where femsid like '%${IST}%' and serverid LIKE '%${SRV}%'"
+
+  echo "${SQLSTRING}"
+}
+#"select ssgroupid, femsid, serverid from Tangram_Eas_srv where femsid like '%bmf110%'"
 
 
 
